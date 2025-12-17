@@ -1,0 +1,71 @@
+---
+id: update-task
+title: "Update task"
+description: "Update task"
+sidebar_label: "Update task"
+hide_title: true
+hide_table_of_contents: true
+api: eJytVU1v00AQ/Sur4QLSNkkLJ99KQaK3qJRTiaqpPY23tXeXnXEhsvzf0aydJm0iOIAvceZ73swb9yC4Zihu4Br5kWFlIWLCloSSinvw2BIUIMiPlxVYcB4KiCg1WEj0o3OJKigkdWSBy5pahKIH2UT1YknOr2EYVqMxsXwM1UYtXvuWwQt5URXG2LgSxQU/f+DgVXYQOtw9UClgIaYQKYkjzlonDR2pwEJFXCYXNepRPQtKx4cqC+S7ViEKkXxG4DamsE7EDBaq4AlWw2C3qeFbrFBI8bwaW4ZhUH0ijsHzWOfZYqE/L4rKMzBddleo/xMkrjra1C9sY7Md7e3p2XvY9fAn80vPkUoxT1S7siHz5sPZX+Hd919Sug+pNTHRiSQXjRsDuuDNfUgGmUm2Uf9pKPtZs9lgAZnd2hNd/gWUjindLhanubWOPqEchUU7QYECdGYn4lqC/VXQgebpvwZoWhKj2IOFlqQO1UisUpmVCVbAXPU870f2DWCBKT1tqdmlBgqoRSIX8zlGN0shzKYeZmVo4XXWZbgw58tLM0YBpaVu09WOmp+3CDxTadfsy1jP4u2MnjF2/j7sB7gKweTzknO/XYaLd2BB2xgjnc4Ws8VB/K9OCzFTO9lV16NFj2vn1xk6Ns4bqcloitig6Dxm3/117dg4Ng8di0GjbauvWlb0RI3Sw1Sh7Fryklll2AnNvuf6Y2BpMa/xdP1eTuv4qgv9knls0OUYeTb9NMebzDFdzGK6oysLdWBRVd/fIdO31AyDin90lDZQ3KwsPGFyeKcQ3vRQOdb3Cop7bJgOqng+FvD2ajqt7wzY49VNQvQbHQQ2nf4DC4+02d36YTVYqAkrSrmCUXkx5jm51hA754MDNditx3lZUpQ/2q72KLA8v774Ahbupg9FGyp1SvhTvzj4c6w05MbzZciyHhr06w7XajsG1ec3V11Yhg==
+sidebar_class_name: "patch api-method"
+info_path: docs/api/tasks/roo-tasks-api-poc
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Update task"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/tasks/{taskId}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Update task
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"name":"taskId","in":"path","required":true,"schema":{"type":"string"}}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"required":true,"content":{"application/json":{"schema":{"type":"object","properties":{"title":{"type":"string"},"description":{"type":"string"},"status":{"type":"string","enum":["open","in_progress","done"]}},"title":"UpdateTaskRequest"}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Task updated","content":{"application/json":{"schema":{"type":"object","properties":{"id":{"type":"string","example":"task_123"},"title":{"type":"string","example":"Inspect vehicle #42"},"description":{"type":"string","example":"Perform pre-trip inspection for asset #42"},"status":{"type":"string","enum":["open","in_progress","done"],"example":"open"},"assigneeId":{"type":"string","example":"user_001"},"dueDate":{"type":"string","format":"date-time"}},"title":"Task"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

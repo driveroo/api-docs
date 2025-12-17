@@ -1,0 +1,71 @@
+---
+id: list-tasks-for-a-user
+title: "List tasks for a user"
+description: "List tasks for a user"
+sidebar_label: "List tasks for a user"
+hide_title: true
+hide_table_of_contents: true
+api: eJyFVE1v2zAM/SsCd2kBLUmznXwrumEIsEPQtac0KFSbsdXakirSQQPD/32g7KZdkna+2Jb4+PH4yA7YlATZCm4JI8FaQzDRNMjyl606cKZByKAljIsCNFgHGQTDFWiI+NzaiAVkHFvUQHmFjYGsA94FQRFH60ro+7UYU/COkOR+PpvJq0DKow1svXi9MfREyhDZ0mGh2CuuLCkJDRpy7xgdC8yEUNvcCGz6SILtjmP7h0fMGTSE6ANGtkNky9jQOzMTo9lJXQfnH8GL4/I04ItpQi1HbOjp/mL+DXoNbFnOPjNfOAqYs9piZfMa1Zfvc0H+w8tn+CXGjY+NChG/crRB2cGh9U5tfBQykV+9Ehtu6aRD1zYiAh/QpR7fh+jLiESgofAORRhvUZNZr2FsFS7+Q4p08H42u0iltfjD8ElapBLDkEFhGL+ybRD6NxqTPIYDz6Z+58A6xjJpZB9yfgj8bYmhl+eAXZAbxUl6ibFXvTXIlS8ggxKTDETyGUzllqbdMA/9NAFBA2Hcvo5MG2vIoGIOlE2nJthJ9H4y5jbJfQOHOSz9lbpcLtTgBWRcrNv4VONYxLX3ahgQMTxb+qtz0CAxBxcXk9lkduT4j5WYaoydoFJkY5wprSvHuq1TXKGSEKE2LH2Y3LkbGT5L6rElVkZJjoIVywK3WMtYqMLnbYOO0zAqsoyTu6SN4Ikbk+Q7rpCPiD4tdsYXnoba2OQtUdqNTVglQQnr2X4tDX1Ya6g8sZh03YMhvI1138vxc4txB9lqrWFrojUPQuqqg8KSfBeQbUxNeJTNfuvA2fW47c6VxDuV5etKcbJQtqZu5Q80POHubYX2615DhabAmDIYLi/zHAO/gx3tOBHFXpO/ft5A3/8FrBzyzg==
+sidebar_class_name: "get api-method"
+info_path: docs/api/tasks/roo-tasks-api-poc
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"List tasks for a user"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/users/{userId}/tasks"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+List tasks for a user
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"name":"userId","in":"path","required":true,"schema":{"type":"string"}}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Tasks assigned to this user","content":{"application/json":{"schema":{"type":"object","properties":{"items":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","example":"task_123"},"title":{"type":"string","example":"Inspect vehicle #42"},"description":{"type":"string","example":"Perform pre-trip inspection for asset #42"},"status":{"type":"string","enum":["open","in_progress","done"],"example":"open"},"assigneeId":{"type":"string","example":"user_001"},"dueDate":{"type":"string","format":"date-time"}},"title":"Task"}},"total":{"type":"integer","example":2}},"title":"TaskList"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

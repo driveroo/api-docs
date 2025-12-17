@@ -1,0 +1,71 @@
+---
+id: create-a-task
+title: "Create a task"
+description: "Creates a new task assigned to a user."
+sidebar_label: "Create a task"
+hide_title: true
+hide_table_of_contents: true
+api: eJylVE1v2zAM/SsCd9kANR/dTr513Q49LWizUxYUjM3Gam1Jlei0geH/PlB2mqQN2gHzxbZEPj6Sj2yBcR0hW8Ac40OEpYaCYh6MZ+MsZHAZCJmiQmXpSTHGB4UxmrWlQrFTqJpIYQQaAj02FPm7K7aQtenXBCog49CQhtxZJstyhd5XJkcJML6PEqWFmJdUo3zx1hNk4Fb3lPOA2wMtgA1XBBoGBnRVCGEfnKfAhmLyTzZ7oMjB2DV0rxI7cX+A+va60zvkoSRSr+s+Z+g6uQ8UvbOxp3E+mcrruJjio/LkXsB/1OQ4Y3OCrwZ6xtonvtK02+n5V9jn8J75lY2eclYbKk1ekfr07fzD6h36zyjcuVArH+iMg/HK9IDGWXXngsiHeIcaGbmJJwFtU0vPnScLGoy99cGtA8UIGgpnSVq/j5rMPmjiob3I9nYymabUGvqBfLIskgkyZFAg0xmbmo6kIA1N3e801MSlKyAD72JqEnIJGYw5DZaGSGFDQWathSZUkEHJ7GM2HqM3o+DcaGA3yl0Nr+dw5i7VxexK9SjQLTWITq73U/dzl9vLDOzTOMZ6OT4s1sEgGHvnDmGunVNpPSQGn2fu8gtokGR6vOloMpq8iXJjhI4akkqu0v4aLa6NXaddEpWxiktSEsJXyFLv0R87L01UJqr7JrJCJcmLr1gWtKFK5K8Klzc1WU5To6JhGv1JGpAG1JhkarHej6zCFPQ103Y/iP++7gahMD3z2FdoUuDU1nbo/AJ4t1JLUUS2gLZdYaTfoeo6OX5sKGwhWyw1bDAYXEm1F8tOQ0lYUEhSeaCt8OoZns0lrJhXjYR/szY6vfO4yHPy/K7t8kC0s183c9CwGtZ37QrxCfgkKxifIAPQ4FLF0rimsxYqtOsG12LbY8rzF7roKwE=
+sidebar_class_name: "post api-method"
+info_path: docs/api/tasks/roo-tasks-api-poc
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create a task"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/tasks"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Creates a new task assigned to a user.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"required":true,"content":{"application/json":{"schema":{"type":"object","required":["title","assigneeId"],"properties":{"title":{"type":"string"},"description":{"type":"string"},"assigneeId":{"type":"string"}},"title":"CreateTaskRequest"}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"201":{"description":"Task created","content":{"application/json":{"schema":{"type":"object","properties":{"id":{"type":"string","example":"task_123"},"title":{"type":"string","example":"Inspect vehicle #42"},"description":{"type":"string","example":"Perform pre-trip inspection for asset #42"},"status":{"type":"string","enum":["open","in_progress","done"],"example":"open"},"assigneeId":{"type":"string","example":"user_001"},"dueDate":{"type":"string","format":"date-time"}},"title":"Task"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

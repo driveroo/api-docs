@@ -1,0 +1,177 @@
+openapi: 3.0.3
+info:
+  title: Roo.AI Tasks API (PoC)
+  version: 1.0.0
+  description: |
+    Hello everybody!
+    Let's get acquainted with a simple example API for managing tasks in the Roo.AI platform.
+    This is just a PoC for the developer documentation site.
+servers:
+  - url: https://api.roo.example.com
+    description: PoC API server
+tags:
+  - name: Tasks
+    description: Operations related to tasks
+  - name: Users
+    description: Operations related to users
+
+paths:
+  /tasks:
+    get:
+      tags: [Tasks]
+      summary: List tasks
+      description: Returns a paginated list of tasks.
+      parameters:
+        - name: status
+          in: query
+          description: Filter tasks by status
+          schema:
+            type: string
+            enum: [open, in_progress, done]
+        - name: limit
+          in: query
+          description: Max number of tasks to return
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: A list of tasks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskList'
+
+    post:
+      tags: [Tasks]
+      summary: Create a task
+      description: Creates a new task assigned to a user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTaskRequest'
+      responses:
+        '201':
+          description: Task created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+
+  /tasks/{taskId}:
+    get:
+      tags: [Tasks]
+      summary: Get task by ID
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Task details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '404':
+          description: Task not found
+
+    patch:
+      tags: [Tasks]
+      summary: Update task
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTaskRequest'
+      responses:
+        '200':
+          description: Task updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+
+  /users/{userId}/tasks:
+    get:
+      tags: [Users]
+      summary: List tasks for a user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Tasks assigned to this user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskList'
+
+components:
+  schemas:
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "task_123"
+        title:
+          type: string
+          example: "Inspect vehicle #42"
+        description:
+          type: string
+          example: "Perform pre-trip inspection for asset #42"
+        status:
+          type: string
+          enum: [open, in_progress, done]
+          example: "open"
+        assigneeId:
+          type: string
+          example: "user_001"
+        dueDate:
+          type: string
+          format: date-time
+    TaskList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+        total:
+          type: integer
+          example: 2
+    CreateTaskRequest:
+      type: object
+      required: [title, assigneeId]
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        assigneeId:
+          type: string
+    UpdateTaskRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum: [open, in_progress, done]
