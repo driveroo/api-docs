@@ -1,0 +1,42 @@
+name: Deploy API Docs
+
+on:
+  push:
+    branches:
+      - main          # гілка, з якої деплоїмо
+
+permissions:
+  contents: write     # потрібно, щоб пушити в gh-pages
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Clean previously generated API docs
+        run: npm run clean-api
+
+      - name: Generate API docs (OpenAPI -> MDX)
+        run: npm run gen-api
+
+      - name: Build Docusaurus site
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          publish_branch: gh-pages

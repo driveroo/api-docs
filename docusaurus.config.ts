@@ -5,19 +5,19 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'Roo API Docs',
+  tagline: 'ROO.AI developer documentation',
   favicon: 'img/favicon.ico',
 
   future: {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
   },
 
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://driveroo.github.io',
   baseUrl: '/',
 
-  organizationName: 'facebook',
-  projectName: 'docusaurus',
+  organizationName: 'driveroo',
+  projectName: 'api-docs',
 
   onBrokenLinks: 'throw',
 
