@@ -14,7 +14,7 @@ const config: Config = {
   },
 
   url: 'https://driveroo.github.io',
-  baseUrl: '/',
+  baseUrl: '/api-docs/',
 
   organizationName: 'driveroo',
   projectName: 'api-docs',
