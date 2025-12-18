@@ -32,23 +32,12 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          // 👇 ВАЖЛИВО: сторінки доків рендеряться через ApiItem із openapi-теми
+          // Doc pages are rendered via ApiItem from openapi theme
           docItemComponent: '@theme/ApiItem',
           editUrl:
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
-        },
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -56,28 +45,28 @@ const config: Config = {
     ],
   ],
 
-  // 👇 Увімкнули Mermaid у markdown
+  // Launch Mermaid in markdown
   markdown: {
     mermaid: true,
   },
 
-  // 👇 ТЕМИ, яка дає ApiExplorer/ApiItem + Redux Provider / Також тема для Mermaid
+  // 👇 Themes, that give ApiExplorer/ApiItem + Redux Provider / Also theme for Mermaid
   themes: [
       'docusaurus-theme-openapi-docs',
       '@docusaurus/theme-mermaid',
       ],
 
-  // 👇 ПЛАГІН, який генерує MDX із OpenAPI
+  // Plugin that generates MDX from OpenAPI
   plugins: [
     [
       'docusaurus-plugin-openapi-docs',
       {
         id: 'openapi',
-        docsPluginId: 'classic',
+        docsPluginId: 'default',
         config: {
-          tasksApi: {
-            specPath: 'openapi/tasks-api.yaml', // твій YAML
-            outputDir: 'docs/api/tasks',        // куди генерити .mdx
+          publicApi: {
+            specPath: 'openapi/public-api.v1.openapi.json',
+            outputDir: 'docs/api/reference',
             sidebarOptions: {
               groupPathsBy: 'tag',
             },
@@ -93,21 +82,20 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'My Site',
+      title: 'Home',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: 'Roo logo',
+        src: 'https://roo.ai/wp-content/themes/roo/img/ico/roo-logo.svg',
       },
       items: [
         {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'API',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/driveroo/api-docs',
           label: 'GitHub',
           position: 'right',
         },
@@ -117,28 +105,24 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'ROO.AI',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'Main site',
+              href: 'https://roo.ai/',
             },
           ],
         },
         {
-          title: 'Community',
+          title: 'Support',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'Help center',
+              href: 'https://driveroo.atlassian.net/servicedesk/',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
+              label: 'User documentation',
+              href: 'https://example.com',
             },
           ],
         },
@@ -146,17 +130,13 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
-            },
-            {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/driveroo/api-docs',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `© ROO.AI 2025 | Frontline Digital Automation`,
     },
     prism: {
       theme: prismThemes.github,

@@ -1,0 +1,104 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Public API",
+    "version": "1.0.0",
+    "description": "Public API v1"
+  },
+  "paths": {
+    "/userApi/fleets/users": {
+      "get": {
+        "tags": ["User API"],
+        "summary": "Company users list",
+        "description": "Get company users list",
+        "responses": {
+          "403": {
+            "$ref": "#/components/responses/403JWT"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/companyUser" }
+                    },
+                    "success": { "type": "boolean", "example": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["User API"],
+        "summary": "Store new company user",
+        "description": "Store new company user",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/users.storeCompanyUser"
+        },
+        "responses": {
+          "403": {
+            "$ref": "#/components/responses/403JWT"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": { "$ref": "#/components/schemas/companyUser" },
+                    "success": { "type": "boolean", "example": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "403JWT": {
+        "description": "Forbidden (JWT required or invalid).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": { "type": "boolean", "example": false },
+                "message": { "type": "string", "example": "Forbidden" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "companyUser": {
+        "type": "object",
+        "description": "Company user",
+        "additionalProperties": true
+      }
+    },
+    "requestBodies": {
+      "users.storeCompanyUser": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@ id: overview
 title: API Overview
 ---
 
-# Roo Tasks API (PoC)
+# ROO API
 
 Short intro to the API, auth, base URL, etc.
 
@@ -13,7 +13,7 @@ Short intro to the API, auth, base URL, etc.
     - Tasks
     - Users
 
-## How Roo.AI API fits into your architecture
+## How ROO.AI API fits into your architecture
 
 ```mermaid
 flowchart LR
