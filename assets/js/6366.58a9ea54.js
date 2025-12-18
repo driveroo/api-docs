@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkapi_docs_poc=globalThis.webpackChunkapi_docs_poc||[]).push([[6366],{86366:(c,e,a)=>{a.d(e,{createArchitectureServices:()=>s.S});var s=a(38980);a(87960)}}]);
