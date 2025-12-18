@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkapi_docs_poc=globalThis.webpackChunkapi_docs_poc||[]).push([[4599],{69864:o=>{o.exports=JSON.parse('{"metadata":{"permalink":"/api-docs/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
