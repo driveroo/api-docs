@@ -1,1 +1,0 @@
-"use strict";(globalThis.webpackChunkapi_docs_poc=globalThis.webpackChunkapi_docs_poc||[]).push([[1903],{1912:o=>{o.exports=JSON.parse('{"blogBasePath":"/api-docs/blog","blogTitle":"Blog","authorsListPath":"/api-docs/blog/authors"}')}}]);
