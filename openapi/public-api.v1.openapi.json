@@ -1,16 +1,30 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Public API",
-    "version": "1.0.0",
-    "description": "Public API v1"
+    "title": "ROO.AI Platform API",
+    "version": "1.0.0"
   },
+  "servers": [
+    {
+      "url": "https://api.example.com",
+      "description": "Replace with your API base URL (dev/stage/prod)."
+    }
+  ],
+  "tags": [
+    {
+      "name": "User API",
+      "description": "Endpoints for managing company users."
+    }
+  ],
   "paths": {
     "/userApi/fleets/users": {
       "get": {
-        "tags": ["User API"],
-        "summary": "Company users list",
-        "description": "Get company users list",
+        "tags": [
+          "User API"
+        ],
+        "summary": "List company users",
+        "description": "Returns the list of users in the current company.",
+        "operationId": "listCompanyUsers",
         "responses": {
           "403": {
             "$ref": "#/components/responses/403JWT"
@@ -20,24 +34,38 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "properties": {
                     "data": {
                       "type": "array",
-                      "items": { "$ref": "#/components/schemas/companyUser" }
+                      "items": {
+                        "$ref": "#/components/schemas/companyUser"
+                      }
                     },
-                    "success": { "type": "boolean", "example": true }
-                  }
+                    "success": {
+                      "type": "boolean",
+                      "example": true,
+                      "description": "Indicates whether the request was successful."
+                    }
+                  },
+                  "type": "object"
                 }
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
-        "tags": ["User API"],
-        "summary": "Store new company user",
-        "description": "Store new company user",
+        "tags": [
+          "User API"
+        ],
+        "summary": "Create a company user",
+        "description": "Creates a new company user and returns the created user object.",
+        "operationId": "createCompanyUser",
         "requestBody": {
           "$ref": "#/components/requestBodies/users.storeCompanyUser"
         },
@@ -50,41 +78,180 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "properties": {
-                    "data": { "$ref": "#/components/schemas/companyUser" },
-                    "success": { "type": "boolean", "example": true }
-                  }
+                    "data": {
+                      "$ref": "#/components/schemas/companyUser"
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "example": true,
+                      "description": "Indicates whether the request was successful."
+                    }
+                  },
+                  "type": "object"
                 }
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     }
   },
   "components": {
-    "responses": {
-      "403JWT": {
-        "description": "Forbidden (JWT required or invalid).",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": { "type": "boolean", "example": false },
-                "message": { "type": "string", "example": "Forbidden" }
-              }
-            }
-          }
-        }
-      }
-    },
     "schemas": {
       "companyUser": {
-        "type": "object",
-        "description": "Company user",
-        "additionalProperties": true
+        "description": "Company user object.",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/user.id"
+          },
+          "name": {
+            "$ref": "#/components/schemas/user.name"
+          },
+          "first_name": {
+            "$ref": "#/components/schemas/user.first_name"
+          },
+          "last_name": {
+            "$ref": "#/components/schemas/user.last_name"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/user.gender"
+          },
+          "login": {
+            "$ref": "#/components/schemas/user.login"
+          },
+          "email": {
+            "$ref": "#/components/schemas/user.email"
+          },
+          "phone": {
+            "$ref": "#/components/schemas/user.phone"
+          },
+          "mobile_verified": {
+            "$ref": "#/components/schemas/user.mobile_verified"
+          },
+          "picture": {
+            "$ref": "#/components/schemas/user.picture"
+          },
+          "language": {
+            "$ref": "#/components/schemas/user.language"
+          },
+          "zip": {
+            "$ref": "#/components/schemas/user.zip"
+          },
+          "role_updatable": {
+            "description": "Whether the user role can be updated. The role is not updatable if the user is the fleet owner.",
+            "type": "boolean",
+            "example": true
+          },
+          "company": {
+            "$ref": "#/components/schemas/company.name"
+          },
+          "timezone": {
+            "$ref": "#/components/schemas/user.timezone"
+          },
+          "default_visibility": {
+            "$ref": "#/components/schemas/user.default_visibility"
+          }
+        },
+        "type": "object"
+      },
+      "user.email": {
+        "description": "User email address. Used for sign-in and notifications.",
+        "type": "string",
+        "format": "email",
+        "example": "user@mail.com"
+      },
+      "user.first_name": {
+        "description": "User first name",
+        "type": "string",
+        "example": "Name"
+      },
+      "user.last_name": {
+        "description": "User last name",
+        "type": "string",
+        "example": "Surname"
+      },
+      "user.login": {
+        "description": "User login",
+        "type": "string",
+        "example": "l0giN"
+      },
+      "user.notes": {
+        "description": "User notes",
+        "type": "string",
+        "example": "Driver notes",
+        "nullable": true
+      },
+      "user.phone": {
+        "description": "User phone number in international format.",
+        "type": "string",
+        "example": "+380111111111",
+        "nullable": true
+      },
+      "user.id": {
+        "description": "User ID",
+        "type": "number",
+        "format": "integer"
+      },
+      "user.name": {
+        "description": "User full name (display name).",
+        "type": "string",
+        "format": "Name Surname"
+      },
+      "user.gender": {
+        "description": "User gender",
+        "type": "string",
+        "enum": [
+          "male",
+          "female",
+          "others"
+        ],
+        "example": "male"
+      },
+      "user.mobile_verified": {
+        "description": "Whether the user has verified their mobile number.",
+        "type": "boolean",
+        "example": true
+      },
+      "user.picture": {
+        "description": "URL to the user profile picture.",
+        "type": "string",
+        "example": "http://image.site/picture.png"
+      },
+      "user.language": {
+        "description": "User language",
+        "type": "string",
+        "example": "en"
+      },
+      "user.zip": {
+        "description": "User ZIP/postal code.",
+        "type": "string",
+        "example": "65001"
+      },
+      "user.timezone": {
+        "description": "User timezone (IANA time zone name).",
+        "type": "string",
+        "format": "timezone",
+        "example": "America/Los_Angeles"
+      },
+      "user.default_visibility": {
+        "description": "User default visibility state",
+        "type": "number",
+        "format": "integer",
+        "enum": [
+          1,
+          0
+        ],
+        "example": 0
+      },
+      "company.name": {
+        "description": "Company name",
+        "type": "string"
       }
     },
     "requestBodies": {
@@ -93,11 +260,122 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "additionalProperties": true
+              "required": [
+                "first_name",
+                "last_name",
+                "email"
+              ],
+              "properties": {
+                "first_name": {
+                  "$ref": "#/components/schemas/user.first_name"
+                },
+                "last_name": {
+                  "$ref": "#/components/schemas/user.last_name"
+                },
+                "login": {
+                  "$ref": "#/components/schemas/user.login"
+                },
+                "email": {
+                  "$ref": "#/components/schemas/user.email"
+                },
+                "phone": {
+                  "$ref": "#/components/schemas/user.phone"
+                },
+                "password": {
+                  "type": "string",
+                  "minLength": 4,
+                  "description": "User password."
+                },
+                "confirm_password": {
+                  "description": "Password confirmation. Must match `password`.",
+                  "type": "string"
+                },
+                "role": {
+                  "description": "User's global role",
+                  "type": "string",
+                  "nullable": true
+                },
+                "language": {
+                  "description": "Preferred UI language for the user.",
+                  "type": "string",
+                  "example": "en"
+                },
+                "timezone": {
+                  "description": "User timezone (IANA time zone name).",
+                  "type": "string",
+                  "example": "Europe/Helsinki"
+                },
+                "notes": {
+                  "$ref": "#/components/schemas/user.notes"
+                },
+                "groups": {
+                  "description": "User role assignments in company groups.",
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "group_id": {
+                        "description": "Company group ID",
+                        "type": "number",
+                        "format": "integer",
+                        "example": 200
+                      },
+                      "group_name": {
+                        "description": "Company group name",
+                        "type": "string",
+                        "example": "Group #1"
+                      },
+                      "role_id": {
+                        "description": "Company role ID",
+                        "type": "number",
+                        "format": "integer",
+                        "example": 100
+                      },
+                      "role": {
+                        "description": "Company role name",
+                        "type": "string",
+                        "example": "manager"
+                      }
+                    },
+                    "type": "object",
+                    "format": "object"
+                  },
+                  "nullable": true
+                }
+              },
+              "type": "object"
             }
           }
         }
+      }
+    },
+    "responses": {
+      "403JWT": {
+        "description": "Forbidden. Missing or invalid JWT.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Forbidden"
+                }
+              },
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Send the access token in the Authorization header using the Bearer scheme. Example: `Authorization: Bearer <token>`."
       }
     }
   }
