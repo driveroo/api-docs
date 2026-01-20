@@ -51,9 +51,25 @@ const config: Config = {
   },
 
   // 👇 Themes, that give ApiExplorer/ApiItem + Redux Provider / Also theme for Mermaid
+  // Note: @docusaurus/theme-classic is already included by preset-classic, so we only add additional themes
   themes: [
       'docusaurus-theme-openapi-docs',
       '@docusaurus/theme-mermaid',
+      [
+        require.resolve('@easyops-cn/docusaurus-search-local'),
+        {
+          // Enable hashed index files for better long-term browser caching
+          hashed: true,
+
+          // English only
+          language: ['en'],
+
+          // What to index
+          indexDocs: true,
+          indexBlog: false, // set to false if you don't want blog posts in search
+          indexPages: false, // set to true if you want to index standalone pages
+        },
+      ],
       ],
 
   // Plugin that generates MDX from OpenAPI
@@ -66,9 +82,10 @@ const config: Config = {
         config: {
           publicApi: {
             specPath: 'openapi/public-api.v1.openapi.json',
-            outputDir: 'docs/api/reference',
+            outputDir: 'docs/reference',
             sidebarOptions: {
               groupPathsBy: 'tag',
+              categoryLinkSource: 'tag',
             },
           },
         },
