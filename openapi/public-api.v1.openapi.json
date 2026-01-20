@@ -6,8 +6,8 @@
   },
   "servers": [
     {
-      "url": "https://api.example.com",
-      "description": "Replace with your API base URL (dev/stage/prod)."
+      "url": "https://lp.driveroo.com",
+      "description": "This is relevant API base URL ."
     }
   ],
   "tags": [
