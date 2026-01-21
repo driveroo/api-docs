@@ -1,5 +1,7 @@
 # Roo API documentation
 
+[![Deploy API Docs](https://github.com/driveroo/api-docs/actions/workflows/deploy-api-docs.yml/badge.svg)](https://github.com/driveroo/api-docs/actions/workflows/deploy-api-docs.yml) [![pages-build-deployment](https://github.com/driveroo/api-docs/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/driveroo/api-docs/actions/workflows/pages/pages-build-deployment)
+
 Developer documentation for the ROO.AI / Driveroo Platform APIs, built using a docs-as-code approach with Docusaurus.
 
 ---
