@@ -1,5 +1,7 @@
 # Roo API documentation
 
+[![Build status](https://github.com/driveroo/api-docs/actions/workflows/<workflow-file>.yml/badge.svg)](https://github.com/driveroo/api-docs/actions/workflows/<workflow-file>.yml)
+
 Developer documentation for the ROO.AI / Driveroo Platform APIs, built using a docs-as-code approach with Docusaurus.
 
 ---
