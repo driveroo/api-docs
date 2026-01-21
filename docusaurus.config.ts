@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'Roo API Docs',
   tagline: 'ROO.AI developer documentation',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/rooai-favicon.svg',
 
   future: {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
@@ -102,7 +102,8 @@ const config: Config = {
       title: 'Home',
       logo: {
         alt: 'Roo logo',
-        src: 'https://roo.ai/wp-content/themes/roo/img/ico/roo-logo.svg',
+        src: 'img/rooai-driveroo-logos.svg',
+        srcDark: 'img/rooai-driveroo-logos-white.png',
       },
       items: [
         {
