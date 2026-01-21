@@ -32,7 +32,7 @@ const Home: React.FC = () => {
                 Get started with the User API
               </Link>
 
-              <Link className="button button--outline button--lg" to="/api-docs/docs/api/overview">
+              <Link className="button button--outline button--lg" to="/api-docs/docs/reference/user-api">
                 Browse all API reference
               </Link>
             </div>
