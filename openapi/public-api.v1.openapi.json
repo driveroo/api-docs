@@ -13,17 +13,18 @@
   "tags": [
     {
       "name": "User API",
-      "description": "Endpoints that manage company users."
+      "description": "Manage the users in your company."
     }
   ],
-    "paths": {
+  "paths": {
     "/userApi/fleets/users": {
       "get": {
+        "x-public": true,
         "tags": [
           "User API"
         ],
         "summary": "List company users",
-        "description": "Lists users in the current company.",
+        "description": "List users in the current company.",
         "operationId": "listCompanyUsers",
         "responses": {
           "401": {
@@ -113,11 +114,12 @@
         ]
       },
       "post": {
+        "x-public": true,
         "tags": [
           "User API"
         ],
-        "summary": "Create a company user",
-        "description": "Creates a company user and returns the user.",
+        "summary": "Create company user",
+        "description": "Create company user and return the user.",
         "operationId": "createCompanyUser",
         "requestBody": {
           "$ref": "#/components/requestBodies/users.storeCompanyUser"
@@ -162,13 +164,120 @@
         ]
       }
     },
-    "/userApi/fleets/users/all": {
+    "/userApi/fleets/users/{user}": {
       "get": {
+        "x-public": true,
         "tags": [
           "User API"
         ],
-        "summary": "Company users all",
-        "description": "Lists users in the current company. This endpoint does not paginate.",
+        "summary": "Get company user",
+        "description": "Get a user by ID and return related lookup data.",
+        "operationId": "getCompanyUser",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "description": "The user ID.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "401": {
+            "$ref": "#/components/responses/401JWT"
+          },
+          "403": {
+            "$ref": "#/components/responses/403JWT"
+          },
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/companyUserDetail"
+                        }
+                      ],
+                      "description": "A detailed company user object."
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "example": true,
+                      "description": "True if the request succeeds; false for 401 or 403 errors."
+                    },
+                    "roles": {
+                      "type": "object",
+                      "description": "Map of role ID to role name.",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "example": {
+                        "65": "manager",
+                        "66": "dispatcher",
+                        "67": "driver"
+                      }
+                    },
+                    "groups": {
+                      "type": "object",
+                      "description": "Map of group ID to group name.",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "example": {
+                        "56": "First team",
+                        "74": "Second team"
+                      }
+                    },
+                    "languages": {
+                      "type": "object",
+                      "description": "Map of language code to language name.",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "example": {
+                        "en": "English",
+                        "es": "Spanish",
+                        "ar": "Arabic"
+                      }
+                    },
+                    "timezones": {
+                      "type": "object",
+                      "description": "Map of display name to IANA timezone identifier.",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "example": {
+                        "(UTC-10:00) Hawaii": "Pacific/Honolulu",
+                        "(UTC-08:00) Pacific Time (US & Canada)": "America/Los_Angeles"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userApi/fleets/users/all": {
+      "get": {
+        "x-public": true,
+        "tags": [
+          "User API"
+        ],
+        "summary": "List company users (no pagination)",
+        "description": "List users in the current company. This endpoint does not paginate.",
         "operationId": "listCompanyUsersAll",
         "responses": {
           "401": {
@@ -208,112 +317,7 @@
           }
         ]
       }
-    },
-      "/userApi/fleets/users/{user}": {
-        "get": {
-        "tags": [
-          "User API"
-        ],
-        "summary": "Get company user",
-        "description": "Gets a company user by ID and returns related lookup data.",
-        "operationId": "getCompanyUser",
-        "parameters": [
-          {
-            "name": "user",
-            "in": "path",
-            "description": "The user ID.",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-          "responses": {
-          "401": {
-            "$ref": "#/components/responses/401JWT"
-          },
-          "403": {
-            "$ref": "#/components/responses/403JWT"
-          },
-            "200": {
-              "description": "Success.",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                    "data": {
-                      "allOf": [
-                        {
-                          "$ref": "#/components/schemas/companyUserDetail"
-                        }
-                      ],
-                      "description": "A detailed company user object."
-                    },
-                    "success": {
-                      "type": "boolean",
-                      "example": true,
-                      "description": "True if the request succeeds; false for 401 or 403 errors."
-                    },
-                      "roles": {
-                        "type": "object",
-                        "description": "Map of role ID to role name.",
-                        "additionalProperties": {
-                          "type": "string"
-                        },
-                        "example": {
-                          "65": "manager",
-                          "66": "dispatcher",
-                          "67": "driver"
-                        }
-                      },
-                      "groups": {
-                        "type": "object",
-                        "description": "Map of group ID to group name.",
-                        "additionalProperties": {
-                          "type": "string"
-                        },
-                        "example": {
-                          "56": "First team",
-                          "74": "Second team"
-                        }
-                      },
-                      "languages": {
-                        "type": "object",
-                        "description": "Map of language code to language name.",
-                        "additionalProperties": {
-                          "type": "string"
-                        },
-                        "example": {
-                          "en": "English",
-                          "es": "Spanish",
-                          "ar": "Arabic"
-                        }
-                      },
-                      "timezones": {
-                        "type": "object",
-                        "description": "Map of display name to IANA timezone identifier.",
-                        "additionalProperties": {
-                          "type": "string"
-                        },
-                        "example": {
-                          "(UTC-10:00) Hawaii": "Pacific/Honolulu",
-                          "(UTC-08:00) Pacific Time (US & Canada)": "America/Los_Angeles"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+    }
   },
   "components": {
     "schemas": {
