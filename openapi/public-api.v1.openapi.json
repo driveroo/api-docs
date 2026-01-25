@@ -7,44 +7,97 @@
   "servers": [
     {
       "url": "https://lp.driveroo.com",
-      "description": "This is relevant API base URL ."
+      "description": "Base URL for the API."
     }
   ],
   "tags": [
     {
       "name": "User API",
-      "description": "Endpoints for managing company users."
+      "description": "Endpoints that manage company users."
     }
   ],
-  "paths": {
+    "paths": {
     "/userApi/fleets/users": {
       "get": {
         "tags": [
           "User API"
         ],
         "summary": "List company users",
-        "description": "Returns the list of users in the current company.",
+        "description": "Lists users in the current company.",
         "operationId": "listCompanyUsers",
         "responses": {
+          "401": {
+            "$ref": "#/components/responses/401JWT"
+          },
           "403": {
             "$ref": "#/components/responses/403JWT"
           },
           "200": {
-            "description": "Success",
+            "description": "Success.",
             "content": {
               "application/json": {
                 "schema": {
                   "properties": {
                     "data": {
                       "type": "array",
+                      "description": "Array of company user objects, one object per user.",
                       "items": {
                         "$ref": "#/components/schemas/companyUser"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "description": "Pagination metadata for the user list.",
+                      "properties": {
+                        "pagination": {
+                          "type": "object",
+                          "description": "Pagination details for the current response.",
+                          "properties": {
+                            "total": {
+                              "type": "integer",
+                              "description": "Total number of users that match the filters.",
+                              "example": 32
+                            },
+                            "count": {
+                              "type": "integer",
+                              "description": "Number of users returned in this response.",
+                              "example": 20
+                            },
+                            "per_page": {
+                              "type": "integer",
+                              "description": "Requested users per page.",
+                              "example": 20
+                            },
+                            "current_page": {
+                              "type": "integer",
+                              "description": "Current page number.",
+                              "example": 1
+                            },
+                            "total_pages": {
+                              "type": "integer",
+                              "description": "Total number of pages.",
+                              "example": 2
+                            },
+                            "links": {
+                              "type": "object",
+                              "description": "Pagination links for navigating additional pages.",
+                              "properties": {
+                                "next": {
+                                  "type": "string",
+                                  "description": "URL for the next page when more users exist beyond the current page.",
+                                  "example": "https://lp.driveroo.com/userApi/fleets/users?page=2"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          }
+                        }
                       }
                     },
                     "success": {
                       "type": "boolean",
                       "example": true,
-                      "description": "Indicates whether the request was successful."
+                      "description": "True if the request succeeds; false for 401 or 403 errors."
                     }
                   },
                   "type": "object"
@@ -64,28 +117,36 @@
           "User API"
         ],
         "summary": "Create a company user",
-        "description": "Creates a new company user and returns the created user object.",
+        "description": "Creates a company user and returns the user.",
         "operationId": "createCompanyUser",
         "requestBody": {
           "$ref": "#/components/requestBodies/users.storeCompanyUser"
         },
         "responses": {
+          "401": {
+            "$ref": "#/components/responses/401JWT"
+          },
           "403": {
             "$ref": "#/components/responses/403JWT"
           },
           "200": {
-            "description": "Success",
+            "description": "Success.",
             "content": {
               "application/json": {
                 "schema": {
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/companyUser"
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/companyUser"
+                        }
+                      ],
+                      "description": "A company user object."
                     },
                     "success": {
                       "type": "boolean",
                       "example": true,
-                      "description": "Indicates whether the request was successful."
+                      "description": "True if the request succeeds; false for 401 or 403 errors."
                     }
                   },
                   "type": "object"
@@ -100,15 +161,172 @@
           }
         ]
       }
-    }
+    },
+    "/userApi/fleets/users/all": {
+      "get": {
+        "tags": [
+          "User API"
+        ],
+        "summary": "Company users all",
+        "description": "Lists users in the current company. This endpoint does not paginate.",
+        "operationId": "listCompanyUsersAll",
+        "responses": {
+          "401": {
+            "$ref": "#/components/responses/401JWT"
+          },
+          "403": {
+            "$ref": "#/components/responses/403JWT"
+          },
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "description": "Array of company user objects, one object per user.",
+                      "items": {
+                        "$ref": "#/components/schemas/companyUser"
+                      }
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "example": true,
+                      "description": "True if the request succeeds; false for 401 or 403 errors."
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+      "/userApi/fleets/users/{user}": {
+        "get": {
+        "tags": [
+          "User API"
+        ],
+        "summary": "Get company user",
+        "description": "Gets a company user by ID and returns related lookup data.",
+        "operationId": "getCompanyUser",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "description": "The user ID.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+          "responses": {
+          "401": {
+            "$ref": "#/components/responses/401JWT"
+          },
+          "403": {
+            "$ref": "#/components/responses/403JWT"
+          },
+            "200": {
+              "description": "Success.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                    "data": {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/companyUserDetail"
+                        }
+                      ],
+                      "description": "A detailed company user object."
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "example": true,
+                      "description": "True if the request succeeds; false for 401 or 403 errors."
+                    },
+                      "roles": {
+                        "type": "object",
+                        "description": "Map of role ID to role name.",
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "example": {
+                          "65": "manager",
+                          "66": "dispatcher",
+                          "67": "driver"
+                        }
+                      },
+                      "groups": {
+                        "type": "object",
+                        "description": "Map of group ID to group name.",
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "example": {
+                          "56": "First team",
+                          "74": "Second team"
+                        }
+                      },
+                      "languages": {
+                        "type": "object",
+                        "description": "Map of language code to language name.",
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "example": {
+                          "en": "English",
+                          "es": "Spanish",
+                          "ar": "Arabic"
+                        }
+                      },
+                      "timezones": {
+                        "type": "object",
+                        "description": "Map of display name to IANA timezone identifier.",
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "example": {
+                          "(UTC-10:00) Hawaii": "Pacific/Honolulu",
+                          "(UTC-08:00) Pacific Time (US & Canada)": "America/Los_Angeles"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
   },
   "components": {
     "schemas": {
       "companyUser": {
-        "description": "Company user object.",
+        "description": "A company user object.",
         "properties": {
           "id": {
             "$ref": "#/components/schemas/user.id"
+          },
+          "type": {
+            "type": "string",
+            "description": "The resource type.",
+            "example": "user"
           },
           "name": {
             "$ref": "#/components/schemas/user.name"
@@ -123,7 +341,12 @@
             "$ref": "#/components/schemas/user.gender"
           },
           "login": {
-            "$ref": "#/components/schemas/user.login"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/user.login"
+              }
+            ],
+            "nullable": true
           },
           "email": {
             "$ref": "#/components/schemas/user.email"
@@ -138,15 +361,30 @@
             "$ref": "#/components/schemas/user.picture"
           },
           "language": {
-            "$ref": "#/components/schemas/user.language"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/user.language"
+              }
+            ],
+            "nullable": true
           },
           "zip": {
-            "$ref": "#/components/schemas/user.zip"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/user.zip"
+              }
+            ],
+            "nullable": true
           },
           "role_updatable": {
-            "description": "Whether the user role can be updated. The role is not updatable if the user is the fleet owner.",
+            "description": "True if you can update the user's role; false for fleet owners.",
             "type": "boolean",
             "example": true
+          },
+          "has_system_global_role": {
+            "type": "boolean",
+            "description": "True if the user has a system-level global role (role without a company or group scope).",
+            "example": false
           },
           "company": {
             "$ref": "#/components/schemas/company.name"
@@ -156,55 +394,166 @@
           },
           "default_visibility": {
             "$ref": "#/components/schemas/user.default_visibility"
+          },
+          "notes": {
+            "$ref": "#/components/schemas/user.notes"
+          },
+          "notification_channels": {
+            "type": "integer",
+            "description": "A bitmask of enabled notification channels. Example: `10` (decimal) = `1010` (binary). Channel values: `Email=1`, `SMS=2`, `Push=4`, `In-app=8`. `10` = `8` + `2`, so In-app and SMS are enabled.",
+            "example": 10
+          },
+          "last_login": {
+            "type": "string",
+            "description": "The last login timestamp. Empty when unknown.",
+            "example": "2025-01-24 14:05:00"
+          },
+          "last_activity": {
+            "type": "string",
+            "description": "The last activity label. Empty when unknown.",
+            "example": "Dashboard"
+          },
+          "status": {
+            "type": "integer",
+            "description": "The user status code. Values: `0=Deactivated`, `1=Active`, `2=Invited`, `3=Never logged in`.",
+            "example": 2
+          },
+          "status_string": {
+            "type": "string",
+            "description": "The user status label that corresponds to `status`.",
+            "example": "Invited"
+          },
+          "deactivated_at": {
+            "type": "string",
+            "description": "The deactivation timestamp. Empty when the user is active.",
+            "example": "2025-01-12 09:30:00"
+          },
+          "related_id": {
+            "type": "string",
+            "description": "An external identifier that links this user with another system.",
+            "example": null,
+            "nullable": true
+          },
+          "application_tab": {
+            "type": "string",
+            "description": "The default mobile app tab key for the user. This is a string enum with allowed values: `default`, `home`, `wo`, `assets`, `tasks`, `history`, `issues`, `documents`, `daily`, `insights`. The `default` value means inherit the environment-level default tab (by default, Home).",
+            "example": "default"
+          },
+          "application_tab_label": {
+            "type": "string",
+            "description": "The human-readable label derived from `application_tab`.",
+            "example": "~ Inherit default tab ~"
+          },
+          "attributes": {
+            "type": "object",
+            "description": "A key-value map of custom user attributes. Empty object when none are set.",
+            "additionalProperties": true
+          },
+          "groups": {
+            "type": "array",
+            "description": "An array of company groups the user belongs to, including the user's role in each group.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "group_id": {
+                  "type": "integer",
+                  "description": "The company group ID.",
+                  "example": 56
+                },
+                "group_name": {
+                  "type": "string",
+                  "description": "The company group name.",
+                  "example": "First team"
+                },
+                "role_id": {
+                  "type": "integer",
+                  "description": "The company role ID.",
+                  "example": 65
+                },
+                "role": {
+                  "type": "string",
+                  "description": "The company role name.",
+                  "example": "manager"
+                }
+              }
+            }
+          },
+          "role": {
+            "type": "string",
+            "description": "The global role name (not restricted to a group). Can be empty if the user has only group roles or no global role.",
+            "example": ""
+          },
+          "currency": {
+            "type": "object",
+            "description": "Currency configuration used for this user and company context.",
+            "properties": {
+              "currency": {
+                "type": "string",
+                "example": "USD"
+              },
+              "name": {
+                "type": "string",
+                "example": "US Dollar"
+              },
+              "symbol": {
+                "type": "string",
+                "example": "$"
+              },
+              "is_symbol_first": {
+                "type": "boolean",
+                "description": "True if the currency symbol is shown before the amount; false if after.",
+                "example": true
+              }
+            }
           }
         },
         "type": "object"
       },
       "user.email": {
-        "description": "User email address. Used for sign-in and notifications.",
+        "description": "The user's email address. Used for sign-in and notifications.",
         "type": "string",
         "format": "email",
         "example": "user@mail.com"
       },
       "user.first_name": {
-        "description": "User first name",
+        "description": "The user's first name.",
         "type": "string",
         "example": "Name"
       },
       "user.last_name": {
-        "description": "User last name",
+        "description": "The user's last name.",
         "type": "string",
         "example": "Surname"
       },
       "user.login": {
-        "description": "User login",
+        "description": "The user's login.",
         "type": "string",
         "example": "l0giN"
       },
       "user.notes": {
-        "description": "User notes",
+        "description": "Notes about the user.",
         "type": "string",
         "example": "Driver notes",
         "nullable": true
       },
       "user.phone": {
-        "description": "User phone number in international format.",
+        "description": "The user's phone number in international format.",
         "type": "string",
-        "example": "+380111111111",
+        "example": "+12125551212",
         "nullable": true
       },
       "user.id": {
-        "description": "User ID",
+        "description": "The user ID.",
         "type": "number",
         "format": "integer"
       },
       "user.name": {
-        "description": "User full name (display name).",
+        "description": "The user's full name (display name).",
         "type": "string",
         "format": "Name Surname"
       },
       "user.gender": {
-        "description": "User gender",
+        "description": "The user's gender.",
         "type": "string",
         "enum": [
           "male",
@@ -214,33 +563,33 @@
         "example": "male"
       },
       "user.mobile_verified": {
-        "description": "Whether the user has verified their mobile number.",
+        "description": "True if the user has verified their mobile number.",
         "type": "boolean",
         "example": true
       },
       "user.picture": {
-        "description": "URL to the user profile picture.",
+        "description": "URL for the user's profile picture.",
         "type": "string",
         "example": "http://image.site/picture.png"
       },
       "user.language": {
-        "description": "User language",
+        "description": "The user's language.",
         "type": "string",
         "example": "en"
       },
       "user.zip": {
-        "description": "User ZIP/postal code.",
+        "description": "The user's ZIP or postal code.",
         "type": "string",
-        "example": "65001"
+        "example": "12345"
       },
       "user.timezone": {
-        "description": "User timezone (IANA time zone name).",
+        "description": "The user's timezone (IANA time zone name).",
         "type": "string",
         "format": "timezone",
-        "example": "America/Los_Angeles"
+        "example": "Pacific/Honolulu"
       },
       "user.default_visibility": {
-        "description": "User default visibility state",
+        "description": "The user's default visibility flag (`1=visible`, `0=hidden`).",
         "type": "number",
         "format": "integer",
         "enum": [
@@ -250,8 +599,126 @@
         "example": 0
       },
       "company.name": {
-        "description": "Company name",
-        "type": "string"
+        "description": "The name of the company the user belongs to.",
+        "type": "string",
+        "example": "Moga Company"
+      },
+      "companyGroup": {
+        "description": "A company group object.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The group ID.",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "The group name.",
+            "example": "First group"
+          },
+          "timezone": {
+            "type": "string",
+            "description": "The group timezone.",
+            "example": "America/Los_Angeles"
+          },
+          "is_default": {
+            "type": "boolean",
+            "description": "True if this is the default group.",
+            "example": false
+          },
+          "hours_increase_limit": {
+            "type": "number",
+            "description": "Hours increase limit for the group.",
+            "example": 50.7
+          },
+          "mileage_increase_limit": {
+            "type": "number",
+            "description": "Mileage increase limit for the group.",
+            "example": 100
+          },
+          "application_tab": {
+            "type": "string",
+            "description": "Default mobile app tab key for the group.",
+            "example": "default"
+          },
+          "application_tab_label": {
+            "type": "string",
+            "description": "Human-readable label derived from `application_tab`.",
+            "example": "~ Inherit default tab ~"
+          },
+          "currency": {
+            "type": "object",
+            "description": "Currency configuration for the group, if available.",
+            "properties": {
+              "currency": {
+                "type": "string",
+                "example": "USD"
+              },
+              "name": {
+                "type": "string",
+                "example": "US Dollar"
+              },
+              "symbol": {
+                "type": "string",
+                "example": "$"
+              },
+              "is_symbol_first": {
+                "type": "boolean",
+                "description": "True if the currency symbol is shown before the amount; false if after.",
+                "example": true
+              }
+            }
+          },
+          "location": {
+            "type": "object",
+            "description": "Location details for the group, if available.",
+            "additionalProperties": true
+          }
+        }
+      },
+      "companyUserDetail": {
+        "description": "A detailed company user object.",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/companyUser"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "activeCarHolds": {
+                "type": "array",
+                "description": "Cars currently assigned to the user within their groups and within the active assignment window (the time between receiving and transferring the car). Empty array when none are set.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              },
+              "removable": {
+                "type": "boolean",
+                "description": "True if the current user can remove this user; false otherwise.",
+                "example": true
+              },
+              "resend": {
+                "type": "object",
+                "description": "Available resend actions for this user.",
+                "properties": {
+                  "verification_sms": {
+                    "type": "boolean",
+                    "description": "True if a verification SMS can be resent.",
+                    "example": false
+                  },
+                  "welcome_email": {
+                    "type": "boolean",
+                    "description": "True if a welcome email can be resent.",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        ]
       }
     },
     "requestBodies": {
@@ -260,6 +727,7 @@
         "content": {
           "application/json": {
             "schema": {
+              "description": "Provide either a global role or group role assignments. Either `role` or `groups` is required.",
               "required": [
                 "first_name",
                 "last_name",
@@ -284,62 +752,88 @@
                 "password": {
                   "type": "string",
                   "minLength": 4,
-                  "description": "User password."
+                  "description": "The user's password."
                 },
                 "confirm_password": {
-                  "description": "Password confirmation. Must match `password`.",
+                  "description": "Password confirmation, if provided.",
                   "type": "string"
                 },
                 "role": {
-                  "description": "User's global role",
-                  "type": "string",
-                  "nullable": true
+                  "description": "The global role name (not restricted to a group). Required if `groups` is not provided. Use `GET /userApi/fleets/roles` to find valid role names.",
+                  "type": "string"
                 },
                 "language": {
-                  "description": "Preferred UI language for the user.",
+                  "description": "The user's preferred UI language.",
                   "type": "string",
-                  "example": "en"
+                  "example": "en",
+                  "nullable": true
                 },
                 "timezone": {
-                  "description": "User timezone (IANA time zone name).",
+                  "description": "The user's timezone (IANA time zone name).",
                   "type": "string",
                   "example": "Europe/Helsinki"
+                },
+                "application_tab": {
+                  "description": "The default mobile app tab key for the user. This is a string enum with allowed values: `default`, `home`, `wo`, `assets`, `tasks`, `history`, `issues`, `documents`, `daily`, `insights`. The `default` value means inherit the environment-level default tab (by default, Home).",
+                  "type": "string",
+                  "example": "default",
+                  "nullable": true
                 },
                 "notes": {
                   "$ref": "#/components/schemas/user.notes"
                 },
+                "notification_channels": {
+                  "type": "integer",
+                  "description": "A bitmask of enabled notification channels. Example: `10` (decimal) = `1010` (binary). Channel values: `Email=1`, `SMS=2`, `Push=4`, `In-app=8`. `10` = `8` + `2`, so In-app and SMS are enabled.",
+                  "example": 10
+                },
+                "send_verification": {
+                  "type": "boolean",
+                  "description": "True to send a verification message to the user; false to skip.",
+                  "example": true
+                },
+                "related_id": {
+                  "type": "string",
+                  "description": "An external identifier that links this user with another system.",
+                  "example": null,
+                  "nullable": true
+                },
+                "attributes": {
+                  "type": "object",
+                  "description": "A key-value map of custom user attributes. Empty object when none are set.",
+                  "additionalProperties": true
+                },
                 "groups": {
-                  "description": "User role assignments in company groups.",
+                  "description": "An array of group role assignments. Required if `role` is not provided. Each item must include `group_id` and `role_id`. Use `GET /userApi/fleets/groups` for group IDs and `GET /userApi/fleets/roles` for role IDs.",
                   "type": "array",
                   "items": {
                     "properties": {
                       "group_id": {
-                        "description": "Company group ID",
+                        "description": "The company group ID.",
                         "type": "number",
                         "format": "integer",
                         "example": 200
                       },
                       "group_name": {
-                        "description": "Company group name",
+                        "description": "Company group name (optional, informational).",
                         "type": "string",
                         "example": "Group #1"
                       },
                       "role_id": {
-                        "description": "Company role ID",
+                        "description": "The company role ID.",
                         "type": "number",
                         "format": "integer",
                         "example": 100
                       },
                       "role": {
-                        "description": "Company role name",
+                        "description": "Company role name (optional, informational).",
                         "type": "string",
                         "example": "manager"
                       }
                     },
                     "type": "object",
                     "format": "object"
-                  },
-                  "nullable": true
+                  }
                 }
               },
               "type": "object"
@@ -349,8 +843,36 @@
       }
     },
     "responses": {
+      "401JWT": {
+        "description": "Unauthorized. Missing, invalid, or expired token.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "error": {
+                  "type": "string",
+                  "example": "Token invalid"
+                },
+                "error_code": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "error_messages": {
+                  "type": "string",
+                  "example": "Token invalid"
+                }
+              },
+              "type": "object"
+            }
+          }
+        }
+      },
       "403JWT": {
-        "description": "Forbidden. Missing or invalid JWT.",
+        "description": "Forbidden. Not enough permissions.",
         "content": {
           "application/json": {
             "schema": {
@@ -361,7 +883,7 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "Forbidden"
+                  "example": "Oops! Not enough permissions. Please contact your administrator"
                 }
               },
               "type": "object"
