@@ -1197,24 +1197,24 @@
               "type": "object"
             },
             "examples": {
-              "Include global role": {
-                "summary": "Provide global role",
+              "Provide a global role": {
+                "summary": "Example request for creating a user with a global role",
                 "value": {
-                  "first_name": "Anton",
-                  "last_name": "Docs",
-                  "email": "anton@example.com",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "email": "user@mail.com",
                   "role": "manager",
                   "timezone": "Pacific/Honolulu",
                   "language": "en"
                 },
                 "description": "Use when assigning a single global role to the user."
               },
-              "Assign/include a group role": {
-                "summary": "Provide a group role",
+              "Provide a group role": {
+                "summary": "Example request for creating a user with a group role",
                 "value": {
-                  "first_name": "Anton",
-                  "last_name": "Docs",
-                  "email": "anton@example.com",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "email": "user@mail.com",
                   "groups": [
                     {
                       "group_id": 56,
