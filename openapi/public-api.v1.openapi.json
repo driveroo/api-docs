@@ -24,17 +24,19 @@
           "User API"
         ],
         "summary": "List company users",
-        "description": "List users in the current company.",
+        "description": "Lists users in the current company.",
         "operationId": "listCompanyUsers",
         "responses": {
           "401": {
-            "$ref": "#/components/responses/401JWT"
+            "$ref": "#/components/responses/401JWT",
+            "description": "Missing or invalid JWT."
           },
           "403": {
-            "$ref": "#/components/responses/403JWT"
+            "$ref": "#/components/responses/403JWT",
+            "description": "Forbidden. You do not have permission to perform this action."
           },
           "200": {
-            "description": "Success.",
+            "description": "Returns a list of users in the current company. Supports pagination.",
             "content": {
               "application/json": {
                 "schema": {
@@ -118,40 +120,83 @@
         "tags": [
           "User API"
         ],
-        "summary": "Create company user",
-        "description": "Create company user and return the user.",
+        "summary": "Create a company user",
+        "description": "Creates a user in the current company.",
         "operationId": "createCompanyUser",
         "requestBody": {
           "$ref": "#/components/requestBodies/users.storeCompanyUser"
         },
         "responses": {
           "401": {
-            "$ref": "#/components/responses/401JWT"
+            "$ref": "#/components/responses/401JWT",
+            "description": "Missing or invalid JWT."
           },
           "403": {
-            "$ref": "#/components/responses/403JWT"
+            "$ref": "#/components/responses/403JWT",
+            "description": "Forbidden. You do not have permission to perform this action."
           },
           "200": {
-            "description": "Success.",
+            "description": "Returns the created company user when `success: true`. Business validation failures return HTTP `200` with `success: false` and error details.",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "data": {
-                      "allOf": [
-                        {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
                           "$ref": "#/components/schemas/companyUser"
+                        },
+                        "success": {
+                          "type": "boolean",
+                          "example": true
                         }
-                      ],
-                      "description": "A company user object."
+                      }
                     },
-                    "success": {
-                      "type": "boolean",
-                      "example": true,
-                      "description": "True if the request succeeds; false for 401 or 403 errors."
+                    {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "error": {
+                          "type": "string",
+                          "example": "Invalid input."
+                        },
+                        "error_code": {
+                          "type": "integer",
+                          "example": 101
+                        },
+                        "error_messages": {
+                          "type": "string",
+                          "example": "The selected role is invalid.,The selected groups.0.role_id is invalid.,The selected groups.0.group_id is invalid."
+                        },
+                        "error_list": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "example": [
+                            "The selected role is invalid.",
+                            "The selected groups.0.role_id is invalid.",
+                            "The selected groups.0.group_id is invalid."
+                          ]
+                        },
+                        "error_scope": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "example": {
+                            "role": "The selected role is invalid.",
+                            "groups.0.role_id": "The selected groups.0.role_id is invalid.",
+                            "groups.0.group_id": "The selected groups.0.group_id is invalid."
+                          }
+                        }
+                      }
                     }
-                  },
-                  "type": "object"
+                  ]
                 }
               }
             }
@@ -170,8 +215,8 @@
         "tags": [
           "User API"
         ],
-        "summary": "Get company user",
-        "description": "Get a user by ID and return related lookup data.",
+        "summary": "Get a company user",
+        "description": "Gets a company user by ID.",
         "operationId": "getCompanyUser",
         "parameters": [
           {
@@ -191,13 +236,15 @@
         ],
         "responses": {
           "401": {
-            "$ref": "#/components/responses/401JWT"
+            "$ref": "#/components/responses/401JWT",
+            "description": "Missing or invalid JWT."
           },
           "403": {
-            "$ref": "#/components/responses/403JWT"
+            "$ref": "#/components/responses/403JWT",
+            "description": "Forbidden. You do not have permission to perform this action."
           },
           "200": {
-            "description": "Success.",
+            "description": "Returns a company user by ID, including related lookup data (roles, groups, languages, timezones).",
             "content": {
               "application/json": {
                 "schema": {
@@ -268,6 +315,110 @@
             }
           }
         }
+      },
+      "post": {
+        "x-public": true,
+        "tags": [
+          "User API"
+        ],
+        "summary": "Update a company user",
+        "description": "Updates a user in the current company.",
+        "operationId": "updateCompanyUser",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "description": "The user ID.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/users.storeCompanyUser"
+        },
+        "responses": {
+          "401": {
+            "$ref": "#/components/responses/401JWT",
+            "description": "Missing or invalid JWT."
+          },
+          "403": {
+            "$ref": "#/components/responses/403JWT",
+            "description": "Forbidden. You do not have permission to perform this action."
+          },
+          "200": {
+            "description": "Returns the updated company user when `success: true`. Business validation failures return HTTP `200` with `success: false` and error details.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/companyUser"
+                        },
+                        "success": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "error": {
+                          "type": "string",
+                          "example": "Invalid input."
+                        },
+                        "error_code": {
+                          "type": "integer",
+                          "example": 101
+                        },
+                        "error_messages": {
+                          "type": "string",
+                          "example": "The selected role is invalid.,The selected groups.0.role_id is invalid.,The selected groups.0.group_id is invalid."
+                        },
+                        "error_list": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "example": [
+                            "The selected role is invalid.",
+                            "The selected groups.0.role_id is invalid.",
+                            "The selected groups.0.group_id is invalid."
+                          ]
+                        },
+                        "error_scope": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "example": {
+                            "role": "The selected role is invalid.",
+                            "groups.0.role_id": "The selected groups.0.role_id is invalid.",
+                            "groups.0.group_id": "The selected groups.0.group_id is invalid."
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/userApi/fleets/users/all": {
@@ -277,17 +428,19 @@
           "User API"
         ],
         "summary": "List company users (no pagination)",
-        "description": "List users in the current company. This endpoint does not paginate.",
+        "description": "Returns all users in the current company.",
         "operationId": "listCompanyUsersAll",
         "responses": {
           "401": {
-            "$ref": "#/components/responses/401JWT"
+            "$ref": "#/components/responses/401JWT",
+            "description": "Missing or invalid JWT."
           },
           "403": {
-            "$ref": "#/components/responses/403JWT"
+            "$ref": "#/components/responses/403JWT",
+            "description": "Forbidden. You do not have permission to perform this action."
           },
           "200": {
-            "description": "Success.",
+            "description": "Returns the full list of company users with the `accidents` count per user. This endpoint does not paginate results.",
             "content": {
               "application/json": {
                 "schema": {
@@ -296,7 +449,7 @@
                       "type": "array",
                       "description": "Array of company user objects, one object per user.",
                       "items": {
-                        "$ref": "#/components/schemas/companyUser"
+                        "$ref": "#/components/schemas/companyUserWithAccidents"
                       }
                     },
                     "success": {
@@ -325,15 +478,18 @@
         "description": "A company user object.",
         "properties": {
           "id": {
-            "$ref": "#/components/schemas/user.id"
+            "$ref": "#/components/schemas/user.id",
+            "readOnly": true
           },
           "type": {
             "type": "string",
             "description": "The resource type.",
-            "example": "user"
+            "example": "user",
+            "readOnly": true
           },
           "name": {
-            "$ref": "#/components/schemas/user.name"
+            "$ref": "#/components/schemas/user.name",
+            "readOnly": true
           },
           "first_name": {
             "$ref": "#/components/schemas/user.first_name"
@@ -383,21 +539,25 @@
           "role_updatable": {
             "description": "True if you can update the user's role; false for fleet owners.",
             "type": "boolean",
-            "example": true
+            "example": true,
+            "readOnly": true
           },
           "has_system_global_role": {
             "type": "boolean",
             "description": "True if the user has a system-level global role (role without a company or group scope).",
-            "example": false
+            "example": false,
+            "readOnly": true
           },
           "company": {
-            "$ref": "#/components/schemas/company.name"
+            "$ref": "#/components/schemas/company.name",
+            "readOnly": true
           },
           "timezone": {
             "$ref": "#/components/schemas/user.timezone"
           },
           "default_visibility": {
-            "$ref": "#/components/schemas/user.default_visibility"
+            "$ref": "#/components/schemas/user.default_visibility",
+            "readOnly": true
           },
           "notes": {
             "$ref": "#/components/schemas/user.notes"
@@ -405,32 +565,38 @@
           "notification_channels": {
             "type": "integer",
             "description": "A bitmask of enabled notification channels. Example: `10` (decimal) = `1010` (binary). Channel values: `Email=1`, `SMS=2`, `Push=4`, `In-app=8`. `10` = `8` + `2`, so In-app and SMS are enabled.",
-            "example": 10
+            "example": 10,
+            "readOnly": true
           },
           "last_login": {
             "type": "string",
             "description": "The last login timestamp. Empty when unknown.",
-            "example": "2025-01-24 14:05:00"
+            "example": "2025-01-24 14:05:00",
+            "readOnly": true
           },
           "last_activity": {
             "type": "string",
-            "description": "The last activity label. Empty when unknown.",
-            "example": "Dashboard"
+            "description": "The last activity source. Possible values: `App` (mobile app) or `Dashboard` (web dashboard). Empty when unknown.",
+            "example": "App",
+            "readOnly": true
           },
           "status": {
             "type": "integer",
             "description": "The user status code. Values: `0=Deactivated`, `1=Active`, `2=Invited`, `3=Never logged in`.",
-            "example": 2
+            "example": 2,
+            "readOnly": true
           },
           "status_string": {
             "type": "string",
             "description": "The user status label that corresponds to `status`.",
-            "example": "Invited"
+            "example": "Invited",
+            "readOnly": true
           },
           "deactivated_at": {
             "type": "string",
             "description": "The deactivation timestamp. Empty when the user is active.",
-            "example": "2025-01-12 09:30:00"
+            "example": "2025-01-12 09:30:00",
+            "readOnly": true
           },
           "related_id": {
             "type": "string",
@@ -446,7 +612,8 @@
           "application_tab_label": {
             "type": "string",
             "description": "The human-readable label derived from `application_tab`.",
-            "example": "~ Inherit default tab ~"
+            "example": "~ Inherit default tab ~",
+            "readOnly": true
           },
           "attributes": {
             "type": "object",
@@ -485,7 +652,8 @@
           "role": {
             "type": "string",
             "description": "The global role name (not restricted to a group). Can be empty if the user has only group roles or no global role.",
-            "example": ""
+            "example": "",
+            "readOnly": true
           },
           "currency": {
             "type": "object",
@@ -508,7 +676,8 @@
                 "description": "True if the currency symbol is shown before the amount; false if after.",
                 "example": true
               }
-            }
+            },
+            "readOnly": true
           }
         },
         "type": "object"
@@ -722,7 +891,206 @@
               }
             }
           }
-        ]
+        ],
+        "properties": {}
+      },
+      "companyUserWithAccidents": {
+        "description": "A company user object with accident count.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/user.id"
+          },
+          "type": {
+            "type": "string",
+            "description": "The resource type.",
+            "example": "user"
+          },
+          "name": {
+            "$ref": "#/components/schemas/user.name"
+          },
+          "first_name": {
+            "$ref": "#/components/schemas/user.first_name"
+          },
+          "last_name": {
+            "$ref": "#/components/schemas/user.last_name"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/user.gender"
+          },
+          "login": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/user.login"
+              }
+            ],
+            "nullable": true
+          },
+          "email": {
+            "$ref": "#/components/schemas/user.email"
+          },
+          "phone": {
+            "$ref": "#/components/schemas/user.phone"
+          },
+          "mobile_verified": {
+            "$ref": "#/components/schemas/user.mobile_verified"
+          },
+          "picture": {
+            "$ref": "#/components/schemas/user.picture"
+          },
+          "language": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/user.language"
+              }
+            ],
+            "nullable": true
+          },
+          "zip": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/user.zip"
+              }
+            ],
+            "nullable": true
+          },
+          "role_updatable": {
+            "description": "True if you can update the user's role; false for fleet owners.",
+            "type": "boolean",
+            "example": true
+          },
+          "has_system_global_role": {
+            "type": "boolean",
+            "description": "True if the user has a system-level global role (role without a company or group scope).",
+            "example": false
+          },
+          "company": {
+            "$ref": "#/components/schemas/company.name"
+          },
+          "timezone": {
+            "$ref": "#/components/schemas/user.timezone"
+          },
+          "default_visibility": {
+            "$ref": "#/components/schemas/user.default_visibility"
+          },
+          "notes": {
+            "$ref": "#/components/schemas/user.notes"
+          },
+          "notification_channels": {
+            "type": "integer",
+            "description": "A bitmask of enabled notification channels. Example: `10` (decimal) = `1010` (binary). Channel values: `Email=1`, `SMS=2`, `Push=4`, `In-app=8`. `10` = `8` + `2`, so In-app and SMS are enabled.",
+            "example": 10
+          },
+          "last_login": {
+            "type": "string",
+            "description": "The last login timestamp. Empty when unknown.",
+            "example": "2025-01-24 14:05:00"
+          },
+          "last_activity": {
+            "type": "string",
+            "description": "The last activity source. Possible values: `App` (mobile app) or `Dashboard` (web dashboard). Empty when unknown.",
+            "example": "App"
+          },
+          "status": {
+            "type": "integer",
+            "description": "The user status code. Values: `0=Deactivated`, `1=Active`, `2=Invited`, `3=Never logged in`.",
+            "example": 2
+          },
+          "status_string": {
+            "type": "string",
+            "description": "The user status label that corresponds to `status`.",
+            "example": "Invited"
+          },
+          "deactivated_at": {
+            "type": "string",
+            "description": "The deactivation timestamp. Empty when the user is active.",
+            "example": "2025-01-12 09:30:00"
+          },
+          "related_id": {
+            "type": "string",
+            "description": "An external identifier that links this user with another system.",
+            "example": null,
+            "nullable": true
+          },
+          "application_tab": {
+            "type": "string",
+            "description": "The default mobile app tab key for the user. This is a string enum with allowed values: `default`, `home`, `wo`, `assets`, `tasks`, `history`, `issues`, `documents`, `daily`, `insights`. The `default` value means inherit the environment-level default tab (by default, Home).",
+            "example": "default"
+          },
+          "application_tab_label": {
+            "type": "string",
+            "description": "The human-readable label derived from `application_tab`.",
+            "example": "~ Inherit default tab ~"
+          },
+          "attributes": {
+            "type": "object",
+            "description": "A key-value map of custom user attributes. Empty object when none are set.",
+            "additionalProperties": true
+          },
+          "groups": {
+            "type": "array",
+            "description": "An array of company groups the user belongs to, including the user's role in each group.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "group_id": {
+                  "type": "integer",
+                  "description": "The company group ID.",
+                  "example": 56
+                },
+                "group_name": {
+                  "type": "string",
+                  "description": "The company group name.",
+                  "example": "First team"
+                },
+                "role_id": {
+                  "type": "integer",
+                  "description": "The company role ID.",
+                  "example": 65
+                },
+                "role": {
+                  "type": "string",
+                  "description": "The company role name.",
+                  "example": "manager"
+                }
+              }
+            }
+          },
+          "role": {
+            "type": "string",
+            "description": "The global role name (not restricted to a group). Can be empty if the user has only group roles or no global role.",
+            "example": ""
+          },
+          "currency": {
+            "type": "object",
+            "description": "Currency configuration used for this user and company context.",
+            "properties": {
+              "currency": {
+                "type": "string",
+                "example": "USD"
+              },
+              "name": {
+                "type": "string",
+                "example": "US Dollar"
+              },
+              "symbol": {
+                "type": "string",
+                "example": "$"
+              },
+              "is_symbol_first": {
+                "type": "boolean",
+                "description": "True if the currency symbol is shown before the amount; false if after.",
+                "example": true
+              }
+            }
+          },
+          "accidents": {
+            "type": "integer",
+            "description": "Number of accident records for the user.",
+            "example": 0,
+            "readOnly": true
+          }
+        }
       }
     },
     "requestBodies": {
@@ -731,7 +1099,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "description": "Provide either a global role or group role assignments. Either `role` or `groups` is required.",
+              "description": "Provide either a global role or group role assignments. Use `role` for a global role, or `groups` for group roles (not both). See the examples for both valid request shapes.",
               "required": [
                 "first_name",
                 "last_name",
@@ -756,11 +1124,13 @@
                 "password": {
                   "type": "string",
                   "minLength": 4,
-                  "description": "The user's password."
+                  "description": "The user's password.",
+                  "writeOnly": true
                 },
                 "confirm_password": {
                   "description": "Password confirmation, if provided.",
-                  "type": "string"
+                  "type": "string",
+                  "writeOnly": true
                 },
                 "role": {
                   "description": "The global role name (not restricted to a group). Required if `groups` is not provided. Use `GET /userApi/fleets/roles` to find valid role names.",
@@ -786,16 +1156,6 @@
                 "notes": {
                   "$ref": "#/components/schemas/user.notes"
                 },
-                "notification_channels": {
-                  "type": "integer",
-                  "description": "A bitmask of enabled notification channels. Example: `10` (decimal) = `1010` (binary). Channel values: `Email=1`, `SMS=2`, `Push=4`, `In-app=8`. `10` = `8` + `2`, so In-app and SMS are enabled.",
-                  "example": 10
-                },
-                "send_verification": {
-                  "type": "boolean",
-                  "description": "True to send a verification message to the user; false to skip.",
-                  "example": true
-                },
                 "related_id": {
                   "type": "string",
                   "description": "An external identifier that links this user with another system.",
@@ -818,32 +1178,58 @@
                         "format": "integer",
                         "example": 200
                       },
-                      "group_name": {
-                        "description": "Company group name (optional, informational).",
-                        "type": "string",
-                        "example": "Group #1"
-                      },
                       "role_id": {
                         "description": "The company role ID.",
                         "type": "number",
                         "format": "integer",
                         "example": 100
-                      },
-                      "role": {
-                        "description": "Company role name (optional, informational).",
-                        "type": "string",
-                        "example": "manager"
                       }
                     },
                     "type": "object",
-                    "format": "object"
+                    "format": "object",
+                    "required": [
+                      "group_id",
+                      "role_id"
+                    ]
                   }
                 }
               },
               "type": "object"
+            },
+            "examples": {
+              "Include global role": {
+                "summary": "Provide global role",
+                "value": {
+                  "first_name": "Anton",
+                  "last_name": "Docs",
+                  "email": "anton@example.com",
+                  "role": "manager",
+                  "timezone": "Pacific/Honolulu",
+                  "language": "en"
+                },
+                "description": "Use when assigning a single global role to the user."
+              },
+              "Assign/include a group role": {
+                "summary": "Provide a group role",
+                "value": {
+                  "first_name": "Anton",
+                  "last_name": "Docs",
+                  "email": "anton@example.com",
+                  "groups": [
+                    {
+                      "group_id": 56,
+                      "role_id": 65
+                    }
+                  ],
+                  "timezone": "Pacific/Honolulu",
+                  "language": "en"
+                },
+                "description": "Use when assigning one or more group roles to the user."
+              }
             }
           }
-        }
+        },
+        "description": "Role assignment is mutually exclusive: provide either `role` (global role) or `groups` (group roles)."
       }
     },
     "responses": {
