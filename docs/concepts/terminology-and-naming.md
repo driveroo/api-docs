@@ -15,7 +15,7 @@ Functionally, these endpoints manage assets and their operational lifecycle, not
 | Vehicle              | `cars`, `car/{id}`               | API naming for asset instances in v1.                                 |
 | Asset type           | Asset Types API                  | Defines the category of an asset (car, truck, equipment).             |
 | Asset status         | Asset Status API                 | Defines the current state of an asset.                                 |
-| Inspection           | Inspections API                  | Used to inspect asset condition via templates and checklists.          |
+| Inspection           | Inspections API                  | Uses service type configuration and questions (additional fields) that form the inspection checklist. |
 | Issue                | Issues API                       | A problem or defect detected manually or during an inspection.        |
 | Work order           | Work Orders API                  | A task created to resolve an issue or perform planned work.            |
 | Custom attributes    | Custom Attributes API            | Extensible fields attached to most entities.                           |

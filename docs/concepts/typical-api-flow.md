@@ -163,7 +163,7 @@ Inspections define **how asset condition is checked**.
 
 You can configure:
 
-- Inspection templates.
+- Inspection configuration (service type + questions).
 - Inspection frequency (daily, weekly, periodic).
 - Mandatory or optional inspections.
 - Checklist structure and required inputs.
@@ -178,7 +178,7 @@ Users perform inspections on assets.
 
 During an inspection, users can:
 
-- Fill in checklist answers.
+- Answer inspection questions (the checklist).
 - Add comments.
 - Attach photos or videos.
 - Pause, resume, or complete inspections offline.
