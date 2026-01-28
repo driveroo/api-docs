@@ -12,12 +12,12 @@ Functionally, the same workflow applies to any inspectable asset.
 config:
 flowchart:
 curve: basis
-nodeSpacing: 40
-rankSpacing: 55
+nodeSpacing: 52
+rankSpacing: 72
 theme: base
 themeVariables:
 fontFamily: ''
-fontSize: 14px
+fontSize: 18px
 ---
 flowchart LR
 classDef tenant fill:#F3F6FF,stroke:#335CFF,stroke-width:1px,color:#0B1B4D;
@@ -141,7 +141,7 @@ This owner role is created automatically with the company, and there can be only
 
 ## Step 2. Manage users and teams
 
-The first step is defining **who works in the system**.
+This step is defining **who works in the system**.
 
 Using the **User API**, you can:
 
