@@ -1,4 +1,4 @@
-# How Roo.AI works: a typical API flow
+# How ROO.AI works: a typical API flow
 
 This page explains how Roo.AI typically works from an API consumer's point of view.
 
@@ -117,12 +117,29 @@ Before using the public API:
 - A **company (tenant)** already exists.
 - API access is issued to users belonging to that company.
 
-> The public API does not create or delete companies.  
-> All API operations run within an existing company context.
+:::note
+The public API does not create or delete companies.  
+All API operations run within an existing company context.
+:::
 
 ---
 
-## Step 1. Manage users and teams
+## Step 1. Define roles (required before users)
+
+Before creating users, make sure the **roles** they will use already exist.
+
+- You can assign either a **global role** or **group roles** when creating a user.
+- Because of this, role configuration typically comes **before** user creation.
+- Use the Roles endpoints (for example, `GET /userApi/fleets/roles`) to list available roles before creating users.
+
+:::note
+Each company has a single **fleet owner** (company owner).  
+This owner role is created automatically with the company, and there can be only one.
+:::
+
+---
+
+## Step 2. Manage users and teams
 
 The first step is defining **who works in the system**.
 
@@ -140,7 +157,7 @@ Users and groups are later used for:
 
 ---
 
-## Step 2. Register assets (vehicles in v1)
+## Step 3. Register assets (vehicles in v1)
 
 Next, you describe **what you want to manage**.
 
@@ -157,7 +174,7 @@ At this point, Roo.AI knows **which assets exist** and their basic properties.
 
 ---
 
-## Step 3. Configure inspections
+## Step 4. Configure inspections
 
 Inspections define **how asset condition is checked**.
 
@@ -172,7 +189,7 @@ Inspection configuration ensures checks are **consistent and repeatable**.
 
 ---
 
-## Step 4. Run inspections
+## Step 5. Run inspections
 
 Users perform inspections on assets.
 
@@ -183,11 +200,11 @@ During an inspection, users can:
 - Attach photos or videos.
 - Pause, resume, or complete inspections offline.
 
-An inspection represents a **snapshot of an asset’s condition** at a specific moment in time.
+An inspection represents a **snapshot of an asset’s condition** at a specific moment in time. Inspections represent the **execution layer** of the platform.
 
 ---
 
-## Step 5. Detect issues
+## Step 6. Detect issues
 
 If a problem is detected:
 
@@ -208,7 +225,7 @@ Examples:
 
 ---
 
-## Step 6. Create work orders
+## Step 7. Create work orders
 
 Issues are resolved through **work orders**.
 
@@ -229,7 +246,7 @@ Work orders represent the **execution layer** of the platform.
 
 ---
 
-## Step 7. Materials, purchasing, and warranties (optional)
+## Step 8. Materials, purchasing, and warranties (optional)
 
 If work requires parts or services, you can use supporting APIs:
 
@@ -242,7 +259,7 @@ These APIs support real operational workflows.
 
 ---
 
-## Step 8. Attach documents and media
+## Step 9. Attach documents and media
 
 Throughout the workflow, you can attach additional context:
 
@@ -259,7 +276,7 @@ This ensures traceability and auditability.
 
 ---
 
-## Step 9. Alerts, mentions, and visibility
+## Step 10. Alerts, mentions, and visibility
 
 To keep users informed:
 
@@ -294,4 +311,4 @@ Using the Roo.AI API, you can:
 - Build custom dashboards and reports.
 - Apply the same workflow beyond vehicles.
 
-Vehicles are just the starting point — the workflow is asset-based by design.
+Vehicles are just the starting point — the API flow is asset-based by design.
