@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">How ROO.AI works: a typical API flow | Roo API Docs</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://driveroo.github.io/api-docs/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://driveroo.github.io/api-docs/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://driveroo.github.io/api-docs/docs/concepts/typical-api-flow"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="How ROO.AI works: a typical API flow | Roo API Docs"><meta data-rh="true" name="description" content="This page explains how Roo.AI typically works from an API consumer&#x27;s point of view."><meta data-rh="true" property="og:description" content="This page explains how Roo.AI typically works from an API consumer&#x27;s point of view."><link data-rh="true" rel="icon" href="/api-docs/img/rooai-favicon.svg"><link data-rh="true" rel="canonical" href="https://driveroo.github.io/api-docs/docs/concepts/typical-api-flow"><link data-rh="true" rel="alternate" href="https://driveroo.github.io/api-docs/docs/concepts/typical-api-flow" hreflang="en"><link data-rh="true" rel="alternate" href="https://driveroo.github.io/api-docs/docs/concepts/typical-api-flow" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"How ROO.AI works: a typical API flow","item":"https://driveroo.github.io/api-docs/docs/concepts/typical-api-flow"}]}</script><link rel="stylesheet" href="/api-docs/assets/css/styles.e7186ae4.css">
-<script src="/api-docs/assets/js/runtime~main.712d11cd.js" defer="defer"></script>
+<script src="/api-docs/assets/js/runtime~main.f846f2d0.js" defer="defer"></script>
 <script src="/api-docs/assets/js/main.d5e1e193.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -18,14 +18,14 @@
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="conceptual-diagram">Conceptual diagram<a href="#conceptual-diagram" class="hash-link" aria-label="Direct link to Conceptual diagram" title="Direct link to Conceptual diagram" translate="no">​</a></h2>
 <!-- -->
 <hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-0-company-context">Step 0. Company context<a href="#step-0-company-context" class="hash-link" aria-label="Direct link to Step 0. Company context" title="Direct link to Step 0. Company context" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-0-organization-context">Step 0. Organization context<a href="#step-0-organization-context" class="hash-link" aria-label="Direct link to Step 0. Organization context" title="Direct link to Step 0. Organization context" translate="no">​</a></h2>
 <p>Before using the public API:</p>
 <ul>
-<li class="">A <strong>company (tenant)</strong> already exists.</li>
-<li class="">API access is issued to users belonging to that company.</li>
+<li class="">An <strong>organization (company/tenant)</strong> already exists.</li>
+<li class="">API access is issued to users belonging to that organization.</li>
 </ul>
-<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>The public API does not create or delete companies.<br>
-<!-- -->All API operations run within an existing company context.</p></div></div>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>The public API does not create or delete organizations (companies).<br>
+<!-- -->All API operations run within an existing organization context.</p></div></div>
 <hr>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-1-define-roles-required-before-users">Step 1. Define roles (required before users)<a href="#step-1-define-roles-required-before-users" class="hash-link" aria-label="Direct link to Step 1. Define roles (required before users)" title="Direct link to Step 1. Define roles (required before users)" translate="no">​</a></h2>
 <p>Before creating users, make sure the <strong>roles</strong> they will use already exist.</p>
@@ -34,8 +34,10 @@
 <li class="">Because of this, role configuration typically comes <strong>before</strong> user creation.</li>
 <li class="">Use the Roles endpoints (for example, <code>GET /userApi/fleets/roles</code>) to list available roles before creating users.</li>
 </ul>
-<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>Each company has a single <strong>fleet owner</strong> (company owner).<br>
-<!-- -->This owner role is created automatically with the company, and there can be only one.</p></div></div>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>Each organization has a single <strong>fleet owner</strong> (organization owner).<br>
+<!-- -->This owner role is created automatically with the organization, and there can be only one.<br>
+<!-- -->It is created as a support user, is not visible to the organization, and cannot be deleted.<br>
+<!-- -->It is used for troubleshooting access when support needs to enter a customer organization.</p></div></div>
 <hr>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-2-manage-users-and-teams">Step 2. Manage users and teams<a href="#step-2-manage-users-and-teams" class="hash-link" aria-label="Direct link to Step 2. Manage users and teams" title="Direct link to Step 2. Manage users and teams" translate="no">​</a></h2>
 <p>This step is defining <strong>who works in the system</strong>.</p>
@@ -55,7 +57,8 @@
 <hr>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-3-register-assets-vehicles-in-v1">Step 3. Register assets (vehicles in v1)<a href="#step-3-register-assets-vehicles-in-v1" class="hash-link" aria-label="Direct link to Step 3. Register assets (vehicles in v1)" title="Direct link to Step 3. Register assets (vehicles in v1)" translate="no">​</a></h2>
 <p>Next, you describe <strong>what you want to manage</strong>.</p>
-<p>In v1, assets are represented as <strong>vehicles</strong> under the <code>/fleets/...</code> namespace.</p>
+<p>In v1, assets are represented as <strong>vehicles</strong> under the <code>/fleets/...</code> namespace.
+Here, “fleet” refers to the organization’s asset pool (the organization’s set of assets).</p>
 <p>Typical actions:</p>
 <ul>
 <li class="">Create vehicles.</li>
@@ -69,7 +72,6 @@
 <p>Inspections define <strong>how asset condition is checked</strong>.</p>
 <p>You can configure:</p>
 <ul>
-<li class="">Inspection configuration (service type + questions).</li>
 <li class="">Inspection frequency (daily, weekly, periodic).</li>
 <li class="">Mandatory or optional inspections.</li>
 <li class="">Checklist structure and required inputs.</li>
@@ -98,6 +100,7 @@
 </ul>
 </li>
 </ul>
+<p>Issues often originate from inspections, but the <strong>Issues API</strong> is its own issue‑management category (separate from the Inspections API), even though the issues can be linked back to specific inspections.</p>
 <p>Important characteristics:</p>
 <ul>
 <li class="">One issue may be linked to multiple inspections.</li>
@@ -108,6 +111,11 @@
 <li class="">“Brake pads worn”</li>
 <li class="">“Oil leak detected”</li>
 <li class="">“Damaged door”</li>
+</ul>
+<p>Typical issue flow (may vary by organization):</p>
+<ul>
+<li class="">Standard: <strong>Open → Assigned → Resolved</strong></li>
+<li class="">Optional statuses some organizations use: <strong>Acknowledged</strong> (ignored), <strong>Fixed</strong>, <strong>Verified</strong> (before Resolved)</li>
 </ul>
 <hr>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-7-create-work-orders">Step 7. Create work orders<a href="#step-7-create-work-orders" class="hash-link" aria-label="Direct link to Step 7. Create work orders" title="Direct link to Step 7. Create work orders" translate="no">​</a></h2>
@@ -125,25 +133,32 @@
 <li class="">linked to one or multiple assets,</li>
 <li class="">executed by internal users or external contractors.</li>
 </ul>
-<p>Work orders represent the <strong>execution layer</strong> of the platform.</p>
+<p>Work orders represent the <strong>execution layer</strong> of the platform and are created to resolve issues or perform planned work.</p>
 <hr>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-8-materials-purchasing-and-warranties-optional">Step 8. Materials, purchasing, and warranties (optional)<a href="#step-8-materials-purchasing-and-warranties-optional" class="hash-link" aria-label="Direct link to Step 8. Materials, purchasing, and warranties (optional)" title="Direct link to Step 8. Materials, purchasing, and warranties (optional)" translate="no">​</a></h2>
 <p>If work requires parts or services, you can use supporting APIs:</p>
 <ul>
-<li class=""><strong>Warehouse</strong> — manage inventory and spare parts.</li>
-<li class=""><strong>Purchase Orders</strong> — order parts from vendors.</li>
-<li class=""><strong>Vendors</strong> — manage suppliers and contractors.</li>
-<li class=""><strong>Warranty and Claims</strong> — handle warranty or compensation cases.</li>
+<li class=""><strong>Warehouse</strong> — manage inventory and spare parts (optional). When enabled, work orders can reference parts directly from a warehouse.</li>
+<li class=""><strong>Purchase Orders</strong> — order parts from vendors to complete work orders and repair or service assets (often to close inspections).</li>
+<li class=""><strong>Vendors</strong> — manage suppliers and contractors (optional). You place purchase orders with vendors, and warehouses can be linked to vendors.</li>
+<li class=""><strong>Warranty and Claims</strong> — warranty applies to assets (optional), and warranty or compensation cases are requested through claims as part of work orders.</li>
 </ul>
 <p>These APIs support real operational workflows.</p>
 <hr>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-9-attach-documents-and-media">Step 9. Attach documents and media<a href="#step-9-attach-documents-and-media" class="hash-link" aria-label="Direct link to Step 9. Attach documents and media" title="Direct link to Step 9. Attach documents and media" translate="no">​</a></h2>
 <p>Throughout the workflow, you can attach additional context:</p>
 <ul>
-<li class="">Documents (contracts, certificates, reports).</li>
-<li class="">Media files (photos and videos).</li>
+<li class="">Documents (contracts, certificates, reports, etc.).</li>
+<li class="">Media files (photos and videos captured during inspections).</li>
 </ul>
-<p>Attachments can be linked to:</p>
+<p>Documents can be attached at different levels:</p>
+<ul>
+<li class="">User level (for example, CDL licenses).</li>
+<li class="">Asset level (for example, asset certificates).</li>
+<li class="">Group level (visible to the whole group).</li>
+<li class="">Organization level (visible to all users; for example, commercial insurance for the fleet).</li>
+</ul>
+<p>Attachments can also be linked to:</p>
 <ul>
 <li class="">assets,</li>
 <li class="">inspections,</li>
@@ -155,11 +170,14 @@
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-10-alerts-mentions-and-visibility">Step 10. Alerts, mentions, and visibility<a href="#step-10-alerts-mentions-and-visibility" class="hash-link" aria-label="Direct link to Step 10. Alerts, mentions, and visibility" title="Direct link to Step 10. Alerts, mentions, and visibility" translate="no">​</a></h2>
 <p>To keep users informed:</p>
 <ul>
-<li class="">Configure alerts and reminders.</li>
+<li class="">Configure alerts, reminders, and tasks.</li>
 <li class="">Mention users or groups in comments using <code>@mentions</code>.</li>
 <li class="">Track daily logs and inspection reports.</li>
 </ul>
 <p>This helps ensure issues are <strong>noticed and acted on</strong>.</p>
+<p>Mentions are used in comment threads on tasks, issues, inspections, and work orders.<br>
+<!-- -->On the web dashboard, these appear as comment threads.<br>
+<!-- -->On mobile apps, they appear as chat-style conversations with notifications when someone is mentioned.</p>
 <hr>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="summary-the-core-lifecycle">Summary: the core lifecycle<a href="#summary-the-core-lifecycle" class="hash-link" aria-label="Direct link to Summary: the core lifecycle" title="Direct link to Summary: the core lifecycle" translate="no">​</a></h2>
 <p>In simple terms, the typical lifecycle looks like this:</p>
@@ -170,16 +188,16 @@
 <li class="">Execute work orders.</li>
 <li class="">Track results and history.</li>
 </ol>
-<p>Everything happens <strong>inside a company</strong>, and everything is accessible via API once the company exists.</p>
+<p>Everything happens <strong>inside an organization</strong>, and everything is accessible via API once the organization exists.</p>
 <hr>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-this-matters-for-api-users">Why this matters for API users<a href="#why-this-matters-for-api-users" class="hash-link" aria-label="Direct link to Why this matters for API users" title="Direct link to Why this matters for API users" translate="no">​</a></h2>
-<p>Using the Roo.AI API, you can:</p>
+<p>Using the ROO.AI API, you can:</p>
 <ul>
 <li class="">Integrate asset inspections into your own systems.</li>
 <li class="">Automate issue tracking and maintenance workflows.</li>
 <li class="">Build custom dashboards and reports.</li>
 <li class="">Apply the same workflow beyond vehicles.</li>
 </ul>
-<p>Vehicles are just the starting point — the API flow is asset-based by design.</p></div></div></div><div class="row"><div class="col col--12"><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/concepts/typical-api-flow.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></div></div></article><div class="row"><div class="col col--12"><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/api-docs/docs/intro"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Intro</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/api-docs/docs/concepts/terminology-and-naming"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">API terminology and naming</div></a></nav></div></div></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#conceptual-diagram" class="table-of-contents__link toc-highlight">Conceptual diagram</a></li><li><a href="#step-0-company-context" class="table-of-contents__link toc-highlight">Step 0. Company context</a></li><li><a href="#step-1-define-roles-required-before-users" class="table-of-contents__link toc-highlight">Step 1. Define roles (required before users)</a></li><li><a href="#step-2-manage-users-and-teams" class="table-of-contents__link toc-highlight">Step 2. Manage users and teams</a></li><li><a href="#step-3-register-assets-vehicles-in-v1" class="table-of-contents__link toc-highlight">Step 3. Register assets (vehicles in v1)</a></li><li><a href="#step-4-configure-inspections" class="table-of-contents__link toc-highlight">Step 4. Configure inspections</a></li><li><a href="#step-5-run-inspections" class="table-of-contents__link toc-highlight">Step 5. Run inspections</a></li><li><a href="#step-6-detect-issues" class="table-of-contents__link toc-highlight">Step 6. Detect issues</a></li><li><a href="#step-7-create-work-orders" class="table-of-contents__link toc-highlight">Step 7. Create work orders</a></li><li><a href="#step-8-materials-purchasing-and-warranties-optional" class="table-of-contents__link toc-highlight">Step 8. Materials, purchasing, and warranties (optional)</a></li><li><a href="#step-9-attach-documents-and-media" class="table-of-contents__link toc-highlight">Step 9. Attach documents and media</a></li><li><a href="#step-10-alerts-mentions-and-visibility" class="table-of-contents__link toc-highlight">Step 10. Alerts, mentions, and visibility</a></li><li><a href="#summary-the-core-lifecycle" class="table-of-contents__link toc-highlight">Summary: the core lifecycle</a></li><li><a href="#why-this-matters-for-api-users" class="table-of-contents__link toc-highlight">Why this matters for API users</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">ROO.AI</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://roo.ai/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Main site<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Support</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://driveroo.atlassian.net/servicedesk/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Help center<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://example.com" target="_blank" rel="noopener noreferrer" class="footer__link-item">User documentation<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/driveroo/api-docs" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">© ROO.AI 2025 | Frontline Digital Automation</div></div></div></footer></div>
+<p>Vehicles are just the starting point — the API flow is asset-based by design.</p></div></div></div><div class="row"><div class="col col--12"><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/concepts/typical-api-flow.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></div></div></article><div class="row"><div class="col col--12"><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/api-docs/docs/intro"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Intro</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/api-docs/docs/concepts/terminology-and-naming"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">API terminology and naming</div></a></nav></div></div></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#conceptual-diagram" class="table-of-contents__link toc-highlight">Conceptual diagram</a></li><li><a href="#step-0-organization-context" class="table-of-contents__link toc-highlight">Step 0. Organization context</a></li><li><a href="#step-1-define-roles-required-before-users" class="table-of-contents__link toc-highlight">Step 1. Define roles (required before users)</a></li><li><a href="#step-2-manage-users-and-teams" class="table-of-contents__link toc-highlight">Step 2. Manage users and teams</a></li><li><a href="#step-3-register-assets-vehicles-in-v1" class="table-of-contents__link toc-highlight">Step 3. Register assets (vehicles in v1)</a></li><li><a href="#step-4-configure-inspections" class="table-of-contents__link toc-highlight">Step 4. Configure inspections</a></li><li><a href="#step-5-run-inspections" class="table-of-contents__link toc-highlight">Step 5. Run inspections</a></li><li><a href="#step-6-detect-issues" class="table-of-contents__link toc-highlight">Step 6. Detect issues</a></li><li><a href="#step-7-create-work-orders" class="table-of-contents__link toc-highlight">Step 7. Create work orders</a></li><li><a href="#step-8-materials-purchasing-and-warranties-optional" class="table-of-contents__link toc-highlight">Step 8. Materials, purchasing, and warranties (optional)</a></li><li><a href="#step-9-attach-documents-and-media" class="table-of-contents__link toc-highlight">Step 9. Attach documents and media</a></li><li><a href="#step-10-alerts-mentions-and-visibility" class="table-of-contents__link toc-highlight">Step 10. Alerts, mentions, and visibility</a></li><li><a href="#summary-the-core-lifecycle" class="table-of-contents__link toc-highlight">Summary: the core lifecycle</a></li><li><a href="#why-this-matters-for-api-users" class="table-of-contents__link toc-highlight">Why this matters for API users</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">ROO.AI</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://roo.ai/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Main site<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Support</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://driveroo.atlassian.net/servicedesk/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Help center<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://example.com" target="_blank" rel="noopener noreferrer" class="footer__link-item">User documentation<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/driveroo/api-docs" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">© ROO.AI 2025 | Frontline Digital Automation</div></div></div></footer></div>
 </body>
 </html>
