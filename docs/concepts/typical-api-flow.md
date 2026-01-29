@@ -26,10 +26,10 @@ classDef core fill:#FFF7ED,stroke:#C2410C,stroke-width:1px,color:#431407;
 classDef aux fill:#F8FAFC,stroke:#64748B,stroke-width:1px,color:#0F172A;
 
 %% --- Tenant context (outside public API) ---
-subgraph TENANT["Company context (tenant)"]
+subgraph TENANT["Organization context (company/tenant)"]
 direction TB
-company["Company (tenant)<br/>Provisioned outside public API"]:::tenant
-auth["Auth context<br/>User session / API keys<br/>Company-scoped access"]:::aux
+organization["Organization (company/tenant)<br/>Provisioned outside public API"]:::tenant
+auth["Auth context<br/>User session / API keys<br/>Organization-scoped access"]:::aux
 end
 
 %% --- Public API surface (v1 naming is historical) ---
@@ -54,18 +54,18 @@ end
 subgraph SUPPORT["Supporting capabilities"]
 direction TB
 docs["Documents<br/>Attach to assets, users, groups,<br/>issues, work orders"]:::aux
-media["Media Library<br/>Photos & videos as evidence"]:::aux
+media["Media Library<br/>Photos & videos captured during inspections<br/>as evidence"]:::aux
 custom["Custom Attributes<br/>Extend any entity model"]:::aux
-alerts["Alerts & reminders<br/>(A.R.T.) + notifications"]:::aux
+alerts["Alerts, reminders, tasks<br/>(A.R.T.) + notifications"]:::aux
 supply["Warehouse & purchase orders<br/>Parts, vendors, replenishment"]:::aux
-claims["Warranty & claims<br/>Compensation / warranty cases"]:::aux
-reports["Reports & logs<br/>Daily logs + inspection reports<br/>BI dashboards (e.g., Metabase)"]:::aux
+claims["Warranty & claims<br/>Warranty applies to assets<br/>Claims via work orders"]:::aux
+reports["Reports & logs<br/>Daily logs + inspection reports<br/>Insights (e.g., Metabase reports)"]:::aux
 end
 
 %% --- Edges: tenant -> API -> lifecycle ---
-company --> auth
-auth L_auth_userapi@-- "Call endpoints (company-scoped)" --> userapi
-auth L_auth_fleets@-- "Call endpoints (company-scoped)" --> fleets
+organization --> auth
+auth L_auth_userapi@-- "Call endpoints (organization-scoped)" --> userapi
+auth L_auth_fleets@-- "Call endpoints (organization-scoped)" --> fleets
 naming --- fleets
 
 userapi L_userapi_users@-- "Create/manage" --> users
@@ -110,16 +110,16 @@ L_issues_wo@{ animation: slow }
 
 ---
 
-## Step 0. Company context
+## Step 0. Organization context
 
 Before using the public API:
 
-- A **company (tenant)** already exists.
-- API access is issued to users belonging to that company.
+- An **organization (company/tenant)** already exists.
+- API access is issued to users belonging to that organization.
 
 :::note
-The public API does not create or delete companies.  
-All API operations run within an existing company context.
+The public API does not create or delete organizations (companies).  
+All API operations run within an existing organization context.
 :::
 
 ---
@@ -133,8 +133,10 @@ Before creating users, make sure the **roles** they will use already exist.
 - Use the Roles endpoints (for example, `GET /userApi/fleets/roles`) to list available roles before creating users.
 
 :::note
-Each company has a single **fleet owner** (company owner).  
-This owner role is created automatically with the company, and there can be only one.
+Each organization has a single **fleet owner** (organization owner).  
+This owner role is created automatically with the organization, and there can be only one.  
+It is created as a support user, is not visible to the organization, and cannot be deleted.  
+It is used for troubleshooting access when support needs to enter a customer organization.
 :::
 
 ---
@@ -162,6 +164,7 @@ Users and groups are later used for:
 Next, you describe **what you want to manage**.
 
 In v1, assets are represented as **vehicles** under the `/fleets/...` namespace.
+Here, “fleet” refers to the organization’s asset pool (the organization’s set of assets).
 
 Typical actions:
 
@@ -180,7 +183,6 @@ Inspections define **how asset condition is checked**.
 
 You can configure:
 
-- Inspection configuration (service type + questions).
 - Inspection frequency (daily, weekly, periodic).
 - Mandatory or optional inspections.
 - Checklist structure and required inputs.
@@ -212,6 +214,8 @@ If a problem is detected:
 - Issues can be:
     - created automatically from inspection results,
     - created manually by users.
+  
+Issues often originate from inspections, but the **Issues API** is its own issue‑management category (separate from the Inspections API), even though the issues can be linked back to specific inspections.
 
 Important characteristics:
 
@@ -222,6 +226,10 @@ Examples:
 - “Brake pads worn”
 - “Oil leak detected”
 - “Damaged door”
+
+Typical issue flow (may vary by organization):
+- Standard: **Open → Assigned → Resolved**
+- Optional statuses some organizations use: **Acknowledged** (ignored), **Fixed**, **Verified** (before Resolved)
 
 ---
 
@@ -242,7 +250,7 @@ Work orders can be:
 - linked to one or multiple assets,
 - executed by internal users or external contractors.
 
-Work orders represent the **execution layer** of the platform.
+Work orders represent the **execution layer** of the platform and are created to resolve issues or perform planned work.
 
 ---
 
@@ -250,10 +258,10 @@ Work orders represent the **execution layer** of the platform.
 
 If work requires parts or services, you can use supporting APIs:
 
-- **Warehouse** — manage inventory and spare parts.
-- **Purchase Orders** — order parts from vendors.
-- **Vendors** — manage suppliers and contractors.
-- **Warranty and Claims** — handle warranty or compensation cases.
+- **Warehouse** — manage inventory and spare parts (optional). When enabled, work orders can reference parts directly from a warehouse.
+- **Purchase Orders** — order parts from vendors to complete work orders and repair or service assets (often to close inspections).
+- **Vendors** — manage suppliers and contractors (optional). You place purchase orders with vendors, and warehouses can be linked to vendors.
+- **Warranty and Claims** — warranty applies to assets (optional), and warranty or compensation cases are requested through claims as part of work orders.
 
 These APIs support real operational workflows.
 
@@ -263,10 +271,16 @@ These APIs support real operational workflows.
 
 Throughout the workflow, you can attach additional context:
 
-- Documents (contracts, certificates, reports).
-- Media files (photos and videos).
+- Documents (contracts, certificates, reports, etc.).
+- Media files (photos and videos captured during inspections).
 
-Attachments can be linked to:
+Documents can be attached at different levels:
+- User level (for example, CDL licenses).
+- Asset level (for example, asset certificates).
+- Group level (visible to the whole group).
+- Organization level (visible to all users; for example, commercial insurance for the fleet).
+
+Attachments can also be linked to:
 - assets,
 - inspections,
 - issues,
@@ -280,11 +294,15 @@ This ensures traceability and auditability.
 
 To keep users informed:
 
-- Configure alerts and reminders.
+- Configure alerts, reminders, and tasks.
 - Mention users or groups in comments using `@mentions`.
 - Track daily logs and inspection reports.
 
 This helps ensure issues are **noticed and acted on**.
+
+Mentions are used in comment threads on tasks, issues, inspections, and work orders.  
+On the web dashboard, these appear as comment threads.  
+On mobile apps, they appear as chat-style conversations with notifications when someone is mentioned.
 
 ---
 
@@ -298,13 +316,13 @@ In simple terms, the typical lifecycle looks like this:
 4. Execute work orders.
 5. Track results and history.
 
-Everything happens **inside a company**, and everything is accessible via API once the company exists.
+Everything happens **inside an organization**, and everything is accessible via API once the organization exists.
 
 ---
 
 ## Why this matters for API users
 
-Using the Roo.AI API, you can:
+Using the ROO.AI API, you can:
 
 - Integrate asset inspections into your own systems.
 - Automate issue tracking and maintenance workflows.
